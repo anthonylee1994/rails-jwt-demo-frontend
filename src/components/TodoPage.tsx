@@ -51,26 +51,41 @@ export const TodoPage = React.memo(() => {
             }}
         >
             <Container maxW="6xl" px={{base: "4", lg: "8"}} py={{base: "6", md: "8"}} position="relative">
-                <Flex align={{base: "stretch", md: "flex-start"}} gap="5" justify="space-between" mb={{base: "8", md: "12"}}>
-                    <Stack gap="4" maxW="3xl" mt={{base: 0, md: 10}}>
-                        <Flex align="center" gap="3">
-                            <Center bg="whiteAlpha.200" boxSize={{base: "11", md: "12"}} color="white" rounded="2xl" shadow="0 16px 32px rgba(10,37,64,0.16)">
-                                <LuCircleCheck size="24" />
-                            </Center>
-                            <Stack gap="0">
+                <Flex align={{base: "stretch", md: "flex-start"}} direction={{base: "column", md: "row"}} gap={{base: "5", md: "8"}} justify="space-between" mb={{base: "8", md: "12"}}>
+                    <Stack gap={{base: "5", md: "4"}} maxW="3xl" mt={{base: 0, md: 10}}>
+                        <Flex align="center" gap="3" justify="space-between">
+                            <Flex align="center" gap="3" minW="0">
+                                <Center bg="whiteAlpha.200" boxSize={{base: "11", md: "12"}} color="white" flexShrink="0" rounded="2xl" shadow="0 16px 32px rgba(10,37,64,0.16)">
+                                    <LuCircleCheck size="24" />
+                                </Center>
                                 <Heading color="white" fontSize={{base: "3xl", md: "5xl"}} letterSpacing="-0.06em" lineHeight="1">
                                     My Tasks
                                 </Heading>
-                            </Stack>
+                            </Flex>
+                            <Button
+                                alignSelf="center"
+                                bg="whiteAlpha.950"
+                                color="#425466"
+                                display={{base: "inline-flex", md: "none"}}
+                                flexShrink="0"
+                                rounded="full"
+                                shadow="0 12px 30px rgba(10,37,64,0.16)"
+                                variant="outline"
+                                onClick={logout}
+                            >
+                                <LuLogOut />
+                                Logout
+                            </Button>
                         </Flex>
-                        <Text color="white" fontSize={{base: "md", md: "lg"}} maxW="2xl">
-                            Capture work fast, keep momentum visible, and clear the queue with a focused Stripe-style dashboard.
+                        <Text alignSelf={{base: "center", md: "stretch"}} color="white" fontSize={{base: "lg", md: "lg"}} lineHeight={{base: "1.55", md: "1.7"}} maxW={{base: "34rem", md: "2xl"}} textAlign={{base: "center", md: "left"}}>
+                            Capture tasks quickly, keep progress visible, and stay focused on the next action.
                         </Text>
                     </Stack>
                     <Button
-                        alignSelf={{base: "flex-start", md: "center"}}
+                        alignSelf="center"
                         bg="whiteAlpha.950"
                         color="#425466"
+                        display={{base: "none", md: "inline-flex"}}
                         rounded="full"
                         shadow="0 12px 30px rgba(10,37,64,0.16)"
                         variant="outline"
