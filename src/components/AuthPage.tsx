@@ -13,11 +13,12 @@ export const AuthPage = React.memo(() => {
 
     const isLogin = mode === "login";
 
-    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = (event: React.SubmitEvent<HTMLFormElement>) => {
         event.preventDefault();
         const formData = new FormData(event.currentTarget);
+        const username = String(formData.get("username")).trim().toLowerCase();
 
-        authenticate(mode, String(formData.get("username")), String(formData.get("password")));
+        authenticate(mode, username, String(formData.get("password")));
     };
 
     const toggleMode = () => {
@@ -137,7 +138,7 @@ export const AuthPage = React.memo(() => {
                                             Username
                                             <Field.RequiredIndicator />
                                         </Field.Label>
-                                        <Input autoComplete="username" bg="white" borderColor="gray.200" name="username" placeholder="Username" rounded="xl" size="lg" />
+                                        <Input autoCapitalize="none" autoComplete="username" bg="white" borderColor="gray.200" name="username" placeholder="Username" rounded="xl" size="lg" />
                                     </Field.Root>
                                     <Field.Root required>
                                         <Field.Label color="#0a2540" fontWeight="semibold">
