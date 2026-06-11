@@ -1,5 +1,5 @@
 import React from "react";
-import {Alert, Badge, Box, Button, Card, Center, Container, EmptyState, Flex, Grid, Heading, Input, Progress, SimpleGrid, Spinner, Stack, Text} from "@chakra-ui/react";
+import {Alert, Badge, Box, Button, Card, Center, Container, Flex, Group, Heading, Input, Progress, SimpleGrid, Spinner, Stack, Text} from "@chakra-ui/react";
 import {LuArrowUpRight, LuCircleCheck, LuClipboardList, LuLogOut, LuPlus, LuSparkles, LuTarget} from "react-icons/lu";
 import {TaskItem} from "@/components/TaskItem";
 import {useAuthStore} from "@/stores/authStore";
@@ -143,7 +143,7 @@ export const TodoPage = React.memo(() => {
                 </SimpleGrid>
 
                 <Card.Root borderColor="blackAlpha.100" overflow="hidden" rounded={{base: "2xl", md: "3xl"}} shadow="0 30px 90px rgba(50, 50, 93, 0.12)">
-                    <Box bg="white" borderBottomColor="blackAlpha.100" borderBottomWidth="1px" px={{base: "5", md: "7"}} py="5">
+                    <Box bg="white" borderBottomColor="blackAlpha.100" borderBottomWidth="1px" px={{base: "5", md: "7"}} py={{base: "4", md: "5"}}>
                         <Flex align={{base: "flex-start", sm: "center"}} direction={{base: "column", sm: "row"}} gap="4" justify="space-between">
                             <Stack gap="1">
                                 <Flex align="center" gap="2">
@@ -152,7 +152,7 @@ export const TodoPage = React.memo(() => {
                                         Today queue
                                     </Text>
                                 </Flex>
-                                <Heading color="#0a2540" fontSize={{base: "xl", md: "2xl"}} letterSpacing="-0.04em">
+                                <Heading color="#0a2540" fontSize={{base: "lg", md: "2xl"}} letterSpacing="-0.04em" lineHeight="1.2">
                                     Keep the next action obvious.
                                 </Heading>
                             </Stack>
@@ -164,25 +164,38 @@ export const TodoPage = React.memo(() => {
                             )}
                         </Flex>
                     </Box>
-                    <Card.Body gap="6" p={{base: "5", md: "7"}}>
+                    <Card.Body gap={{base: "5", md: "6"}} p={{base: "5", md: "7"}}>
                         <form onSubmit={handleCreate}>
-                            <Grid bg="#f6f9fc" borderColor="blackAlpha.100" borderWidth="1px" gap="2" p="2" rounded="2xl" templateColumns={{base: "1fr", sm: "1fr auto"}}>
+                            <Group attached w="full">
                                 <Input
                                     aria-label="New task name"
                                     bg="white"
-                                    borderColor="transparent"
+                                    borderColor="blackAlpha.200"
                                     flex="1"
+                                    minW="0"
                                     placeholder="What needs to be done?"
-                                    rounded="xl"
+                                    roundedStart="xl"
                                     size="lg"
                                     value={newTaskName}
                                     onChange={event => setNewTaskName(event.target.value)}
+                                    _focusVisible={{borderColor: "#635bff", boxShadow: "0 0 0 1px #635bff", zIndex: 1}}
                                 />
-                                <Button bg="#635bff" color="white" disabled={!newTaskName.trim()} minW={{base: "full", sm: "36"}} rounded="xl" size="lg" type="submit" _hover={{bg: "#4f46e5"}}>
+                                <Button
+                                    aria-label="Add task"
+                                    bg="#635bff"
+                                    boxSize="12"
+                                    color="white"
+                                    disabled={!newTaskName.trim()}
+                                    flexShrink="0"
+                                    minW="12"
+                                    p="0"
+                                    rounded="xl"
+                                    type="submit"
+                                    _hover={{bg: "#4f46e5"}}
+                                >
                                     <LuPlus />
-                                    Add
                                 </Button>
-                            </Grid>
+                            </Group>
                         </form>
 
                         {error && (
@@ -216,17 +229,21 @@ export const TodoPage = React.memo(() => {
                                     </Stack>
                                 )}
                                 {tasks.length === 0 ? (
-                                    <EmptyState.Root bg="#f6f9fc" borderColor="blackAlpha.100" borderWidth="1px" py="12" rounded="2xl">
-                                        <EmptyState.Content>
-                                            <EmptyState.Indicator color="#635bff">
-                                                <LuClipboardList />
-                                            </EmptyState.Indicator>
-                                            <Stack gap="1" textAlign="center">
-                                                <EmptyState.Title>No tasks yet</EmptyState.Title>
-                                                <EmptyState.Description>Add your first task above and get things done.</EmptyState.Description>
+                                    <Center py={{base: "8", md: "12"}}>
+                                        <Stack align="center" gap="4" maxW="xs" textAlign="center">
+                                            <Center bg="#eef2ff" boxSize="14" color="#635bff" rounded="2xl">
+                                                <LuClipboardList size="28" />
+                                            </Center>
+                                            <Stack gap="1">
+                                                <Heading color="#0a2540" fontSize={{base: "xl", md: "2xl"}} letterSpacing="-0.04em">
+                                                    No tasks yet
+                                                </Heading>
+                                                <Text color="gray.600" fontSize={{base: "sm", md: "md"}}>
+                                                    Add your first task above and get things done.
+                                                </Text>
                                             </Stack>
-                                        </EmptyState.Content>
-                                    </EmptyState.Root>
+                                        </Stack>
+                                    </Center>
                                 ) : (
                                     <Stack gap="3">
                                         {tasks.map(task => (

@@ -1,6 +1,6 @@
 import React from "react";
-import {AuthPage} from "@/components/AuthPage";
-import {TodoPage} from "@/components/TodoPage";
+import {AuthPage} from "@/pages/AuthPage";
+import {TodoPage} from "@/pages/TodoPage";
 import {useAuthStore} from "@/stores/authStore";
 
 export const App = React.memo(() => {
