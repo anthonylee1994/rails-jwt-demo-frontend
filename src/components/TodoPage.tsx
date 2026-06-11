@@ -52,7 +52,7 @@ export const TodoPage = React.memo(() => {
         >
             <Container maxW="6xl" px={{base: "4", lg: "8"}} py={{base: "6", md: "8"}} position="relative">
                 <Flex align={{base: "stretch", md: "flex-start"}} gap="5" justify="space-between" mb={{base: "8", md: "12"}}>
-                    <Stack gap="4" maxW="3xl">
+                    <Stack gap="4" maxW="3xl" mt={{base: 0, md: 10}}>
                         <Flex align="center" gap="3">
                             <Center bg="whiteAlpha.200" boxSize={{base: "11", md: "12"}} color="white" rounded="2xl" shadow="0 16px 32px rgba(10,37,64,0.16)">
                                 <LuCircleCheck size="24" />
