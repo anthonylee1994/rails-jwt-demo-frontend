@@ -24,7 +24,17 @@ export const AuthForm = React.memo<Props>(({error, isLogin, isSubmitting, passwo
                         Username
                         <Field.RequiredIndicator />
                     </Field.Label>
-                    <Input autoCapitalize="none" autoComplete="username" bg="white" borderColor="gray.200" name="username" placeholder="Username" rounded="xl" size="lg" />
+                    <Input
+                        autoCapitalize="none"
+                        autoComplete="username"
+                        bg="white"
+                        borderColor="gray.200"
+                        name="username"
+                        placeholder="Username"
+                        rounded="xl"
+                        size="lg"
+                        _focusVisible={{borderColor: "#635bff", boxShadow: "0 0 0 1px #635bff", zIndex: 1}}
+                    />
                 </Field.Root>
                 <Field.Root required>
                     <Field.Label color="#0a2540" fontWeight="semibold">
@@ -41,6 +51,7 @@ export const AuthForm = React.memo<Props>(({error, isLogin, isSubmitting, passwo
                         rounded="xl"
                         size="lg"
                         type="password"
+                        _focusVisible={{borderColor: "#635bff", boxShadow: "0 0 0 1px #635bff", zIndex: 1}}
                     />
                 </Field.Root>
                 <Button bg="#635bff" color="white" loading={isSubmitting} mt="2" rounded="xl" size="lg" type="submit" w="full" _hover={{bg: "#4f46e5"}}>
