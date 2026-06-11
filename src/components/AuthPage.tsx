@@ -1,6 +1,6 @@
 import React from "react";
 import {Alert, Badge, Box, Button, Card, Center, Field, Flex, Heading, Input, Stack, Text} from "@chakra-ui/react";
-import {LuArrowRight, LuCircleCheck, LuLockKeyhole, LuSparkles} from "react-icons/lu";
+import {LuCircleCheck, LuLockKeyhole, LuSparkles} from "react-icons/lu";
 import {useAuthStore} from "@/stores/authStore";
 import type {AuthMode} from "@/stores/authStore";
 
@@ -157,7 +157,6 @@ export const AuthPage = React.memo(() => {
                                     </Field.Root>
                                     <Button bg="#635bff" color="white" loading={isSubmitting} mt="2" rounded="xl" size="lg" type="submit" w="full" _hover={{bg: "#4f46e5"}}>
                                         {isLogin ? "Login" : "Register"}
-                                        <LuArrowRight />
                                     </Button>
                                 </Stack>
                             </form>
