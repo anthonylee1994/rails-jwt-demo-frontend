@@ -63,18 +63,21 @@ export const TodoPage = React.memo(() => {
                                 </Heading>
                             </Flex>
                             <Button
+                                aria-label="Logout"
                                 alignSelf="center"
                                 bg="whiteAlpha.950"
+                                boxSize="13"
                                 color="#425466"
                                 display={{base: "inline-flex", md: "none"}}
                                 flexShrink="0"
+                                minW="13"
+                                p="0"
                                 rounded="full"
                                 shadow="0 12px 30px rgba(10,37,64,0.16)"
                                 variant="outline"
                                 onClick={logout}
                             >
-                                <LuLogOut />
-                                Logout
+                                <LuLogOut size="22" />
                             </Button>
                         </Flex>
                         <Text alignSelf={{base: "center", md: "stretch"}} color="white" fontSize={{base: "lg", md: "lg"}} lineHeight={{base: "1.55", md: "1.7"}} maxW={{base: "34rem", md: "2xl"}} textAlign={{base: "center", md: "left"}}>
