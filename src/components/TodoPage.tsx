@@ -36,8 +36,8 @@ export const TodoPage = React.memo(() => {
 
     return (
         <Box bgGradient="to-br" gradientFrom="blue.50" gradientTo="purple.50" minH="100dvh">
-            <Container maxW="2xl" py={{base: "6", sm: "12"}}>
-                <Card.Root rounded="2xl" shadow="xl">
+            <Container maxW="2xl" px={{base: "0", sm: "4"}} py={{base: "0", sm: "12"}}>
+                <Card.Root minH={{base: "100dvh", sm: "auto"}} rounded={{base: "none", sm: "2xl"}} shadow={{base: "none", sm: "xl"}}>
                     <Card.Header pb="2">
                         <Flex align="center" gap="3" justify="space-between">
                             <Flex align="center" gap="3">
@@ -45,7 +45,7 @@ export const TodoPage = React.memo(() => {
                                     <LuCircleCheck size="24" />
                                 </Center>
                                 <Stack gap="0">
-                                    <Heading size="xl">My Tasks</Heading>
+                                    <Heading size={{base: "lg", sm: "xl"}}>My Tasks</Heading>
                                     {username && (
                                         <Text color="fg.muted" textStyle="sm">
                                             Logged in as {username}

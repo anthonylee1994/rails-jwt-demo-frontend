@@ -26,8 +26,8 @@ export const AuthPage = React.memo(() => {
     };
 
     return (
-        <Center bgGradient="to-br" gradientFrom="blue.50" gradientTo="purple.50" minH="100dvh" p="4">
-            <Card.Root maxW="md" p={{base: "2", sm: "4"}} rounded="2xl" shadow="xl" w="full">
+        <Center bgGradient="to-br" gradientFrom="blue.50" gradientTo="purple.50" minH="100dvh" p={{base: "0", sm: "4"}}>
+            <Card.Root maxW="md" minH={{base: "100dvh", sm: "auto"}} p={{base: "2", sm: "4"}} rounded={{base: "none", sm: "2xl"}} shadow={{base: "none", sm: "xl"}} w="full">
                 <Card.Header alignItems="center" gap="4" textAlign="center">
                     <Center bg="blue.500" boxSize="14" color="white" rounded="2xl" shadow="lg">
                         <LuCircleCheck size="28" />
