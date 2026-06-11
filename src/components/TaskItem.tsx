@@ -38,44 +38,83 @@ export const TaskItem = React.memo<Props>(({task}) => {
     return (
         <Flex
             align="center"
-            bg={task.completed ? "green.50" : "bg.subtle"}
-            borderColor={task.completed ? "green.200" : undefined}
+            bg="white"
+            borderColor={task.completed ? "green.200" : "blackAlpha.100"}
             borderWidth="1px"
-            gap="3"
-            px="4"
-            py="3"
-            rounded="xl"
+            boxShadow="0 8px 24px rgba(50, 50, 93, 0.04)"
+            gap="2"
+            minH="14"
+            overflow="hidden"
+            pe="2"
+            ps="0"
+            py="2"
+            rounded="2xl"
             transition="all 0.2s ease"
             _dark={{bg: task.completed ? "green.950" : undefined, borderColor: task.completed ? "green.800" : undefined}}
-            _hover={{bg: task.completed ? "green.100" : "bg", borderColor: task.completed ? "green.300" : "blue.muted", shadow: "sm"}}
+            _hover={{borderColor: task.completed ? "green.300" : "#c7d2fe", boxShadow: "0 12px 32px rgba(50, 50, 93, 0.08)", transform: "translateY(-1px)"}}
         >
             {isEditing ? (
                 <React.Fragment>
-                    <Input autoFocus aria-label="Task name" flex="1" size="sm" value={editingName} onChange={event => setEditingName(event.target.value)} onKeyDown={handleEditKeyDown} />
-                    <IconButton aria-label="Save task name" colorPalette="blue" size="sm" onClick={saveName}>
+                    <Input
+                        ml={2}
+                        autoFocus
+                        aria-label="Task name"
+                        flex="1"
+                        rounded="xl"
+                        size="sm"
+                        value={editingName}
+                        onChange={event => setEditingName(event.target.value)}
+                        onKeyDown={handleEditKeyDown}
+                    />
+                    <IconButton aria-label="Save task name" bg="#635bff" color="white" rounded="full" size="sm" onClick={saveName} _hover={{bg: "#4f46e5"}}>
                         <LuCheck />
                     </IconButton>
-                    <IconButton aria-label="Cancel editing" size="sm" variant="ghost" onClick={() => setEditingName(null)}>
+                    <IconButton aria-label="Cancel editing" rounded="full" size="sm" variant="ghost" onClick={() => setEditingName(null)}>
                         <LuX />
                     </IconButton>
                 </React.Fragment>
             ) : (
                 <React.Fragment>
-                    <Checkbox.Root checked={task.completed} colorPalette="blue" flex="1" onCheckedChange={details => updateTask(task.id, {completed: details.checked === true})}>
+                    <Checkbox.Root
+                        checked={task.completed}
+                        colorPalette="blue"
+                        flex="1"
+                        gap="3"
+                        minW="0"
+                        px="3"
+                        onCheckedChange={details => updateTask(task.id, {completed: details.checked === true})}
+                    >
                         <Checkbox.HiddenInput />
-                        <Checkbox.Control>
+                        <Checkbox.Control borderColor="blackAlpha.300" rounded="md">
                             <Checkbox.Indicator />
                         </Checkbox.Control>
-                        <Checkbox.Label color={task.completed ? "fg.muted" : undefined} textDecoration={task.completed ? "line-through" : undefined}>
+                        <Checkbox.Label
+                            color={task.completed ? "gray.500" : "#0a2540"}
+                            fontWeight="semibold"
+                            overflow="hidden"
+                            textDecoration={task.completed ? "line-through" : undefined}
+                            textOverflow="ellipsis"
+                            whiteSpace="nowrap"
+                        >
                             {task.name}
                         </Checkbox.Label>
                     </Checkbox.Root>
-                    <IconButton aria-label="Edit task" size="sm" variant="ghost" onClick={() => setEditingName(task.name)}>
-                        <LuPencil />
-                    </IconButton>
-                    <IconButton aria-label="Delete task" colorPalette="red" size="sm" variant="subtle" onClick={() => deleteTask(task.id)}>
-                        <LuTrash2 />
-                    </IconButton>
+                    <Flex gap="1">
+                        <IconButton
+                            aria-label="Edit task"
+                            color="#425466"
+                            rounded="full"
+                            size="sm"
+                            variant="ghost"
+                            onClick={() => setEditingName(task.name)}
+                            _hover={{bg: "blue.50", color: "#635bff"}}
+                        >
+                            <LuPencil />
+                        </IconButton>
+                        <IconButton aria-label="Delete task" color="red.600" rounded="full" size="sm" variant="ghost" onClick={() => deleteTask(task.id)} _hover={{bg: "red.50"}}>
+                            <LuTrash2 />
+                        </IconButton>
+                    </Flex>
                 </React.Fragment>
             )}
         </Flex>
