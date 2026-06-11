@@ -6,6 +6,7 @@ import type {AuthMode} from "@/stores/authStore";
 
 export const AuthPage = React.memo(() => {
     const [mode, setMode] = React.useState<AuthMode>("login");
+    const passwordInputRef = React.useRef<HTMLInputElement>(null);
     const authenticate = useAuthStore(state => state.authenticate);
     const clearError = useAuthStore(state => state.clearError);
     const error = useAuthStore(state => state.error);
@@ -13,12 +14,18 @@ export const AuthPage = React.memo(() => {
 
     const isLogin = mode === "login";
 
-    const handleSubmit = (event: React.SubmitEvent<HTMLFormElement>) => {
+    const handleSubmit = async (event: React.SubmitEvent<HTMLFormElement>) => {
         event.preventDefault();
         const formData = new FormData(event.currentTarget);
         const username = String(formData.get("username")).trim().toLowerCase();
+        const isAuthenticated = await authenticate(mode, username, String(formData.get("password")));
 
-        authenticate(mode, username, String(formData.get("password")));
+        if (isLogin && !isAuthenticated) {
+            if (passwordInputRef.current) {
+                passwordInputRef.current.value = "";
+                passwordInputRef.current.focus();
+            }
+        }
     };
 
     const toggleMode = () => {
@@ -151,6 +158,7 @@ export const AuthPage = React.memo(() => {
                                             borderColor="gray.200"
                                             name="password"
                                             placeholder="Enter your password"
+                                            ref={passwordInputRef}
                                             rounded="xl"
                                             size="lg"
                                             type="password"

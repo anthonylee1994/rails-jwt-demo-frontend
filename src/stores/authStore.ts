@@ -21,7 +21,7 @@ interface AuthState {
     username: string | null;
     error: string | null;
     isSubmitting: boolean;
-    authenticate(mode: AuthMode, username: string, password: string): Promise<void>;
+    authenticate(mode: AuthMode, username: string, password: string): Promise<boolean>;
     logout(): void;
     clearError(): void;
 }
@@ -41,8 +41,12 @@ export const useAuthStore = create<AuthState>()(set => ({
 
             localStorage.setItem(TOKEN_KEY, response.data.token);
             set({token: response.data.token, username: decodeUsername(response.data.token), isSubmitting: false});
+
+            return true;
         } catch (error) {
             set({error: extractErrorMessage(error), isSubmitting: false});
+
+            return false;
         }
     },
     logout() {
