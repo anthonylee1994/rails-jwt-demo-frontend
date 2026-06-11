@@ -17,7 +17,6 @@ apiClient.interceptors.request.use(function (config) {
 
 apiClient.interceptors.response.use(
     response => {
-        console.log("response", response.headers);
         const latestToken = extractBearerToken(response.headers.authorization);
         if (latestToken) {
             localStorage.setItem("token", latestToken);
