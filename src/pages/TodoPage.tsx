@@ -80,7 +80,14 @@ export const TodoPage = React.memo(() => {
                                 <LuLogOut size="22" />
                             </Button>
                         </Flex>
-                        <Text alignSelf={{base: "center", md: "stretch"}} color="white" fontSize={{base: "lg", md: "lg"}} lineHeight={{base: "1.55", md: "1.7"}} maxW={{base: "34rem", md: "2xl"}} textAlign={{base: "center", md: "left"}}>
+                        <Text
+                            alignSelf={{base: "center", md: "stretch"}}
+                            color="white"
+                            fontSize={{base: "lg", md: "lg"}}
+                            lineHeight={{base: "1.55", md: "1.7"}}
+                            maxW={{base: "34rem", md: "2xl"}}
+                            textAlign={{base: "center", md: "left"}}
+                        >
                             Capture tasks quickly, keep progress visible, and stay focused on the next action.
                         </Text>
                     </Stack>
