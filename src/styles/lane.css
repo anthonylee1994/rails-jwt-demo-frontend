@@ -735,6 +735,9 @@ button.ln-check.is-done:hover {
         border-right: none;
         border-bottom: none;
     }
+    .ln-modal-footer {
+        padding-bottom: calc(13px + env(safe-area-inset-bottom, 0px));
+    }
 }
 
 /* ── mobile shell ───────────────────────────────────────────── */
