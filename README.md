@@ -2,6 +2,8 @@
 
 React + TypeScript frontend for a JWT-authenticated todo app. It pairs with the [Rails backend](https://github.com/anthonylee1994/rails-jwt-demo).
 
+Live demo: https://lane.on99.app/
+
 ## Tech Stack
 
 - **React 19** + **TypeScript** - UI
