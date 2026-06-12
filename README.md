@@ -12,7 +12,7 @@ Live demo: https://lane.on99.app/
 - **Axios** - API client with JWT request/response handling
 - **React Router** - single-page routing and fallback redirects
 - **React Icons** - UI icons
-- **Custom CSS** - responsive Lane-style auth and task UI
+- **Tailwind CSS v4** - responsive Lane-style auth and task UI
 
 ## Features
 
@@ -76,6 +76,7 @@ src/
 │   ├── lane/
 │   │   ├── Modal.tsx            # Shared modal shell
 │   │   ├── atoms.tsx            # Shared UI primitives
+│   │   ├── classes.ts           # Shared Tailwind class strings (buttons, inputs, nav…)
 │   │   └── icons.tsx            # Inline UI icons
 │   └── todo/
 │       ├── EditTaskModal.tsx    # Rename, complete, and delete task modal
@@ -90,7 +91,7 @@ src/
 │   ├── AuthPage.tsx             # Auth screen
 │   └── TodoPage.tsx             # Todo screen
 ├── styles/
-│   └── lane.css                 # App layout, theme, and responsive styles
+│   └── tailwind.css             # Tailwind entry + Lane design tokens (@theme)
 ├── stores/
 │   ├── authStore.ts             # Auth state and JWT login/logout logic
 │   └── taskStore.ts             # Task CRUD state

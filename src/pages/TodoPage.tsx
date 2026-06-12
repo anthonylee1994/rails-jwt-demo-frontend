@@ -1,5 +1,6 @@
 import React from "react";
 import {Avatar} from "@/components/lane/atoms";
+import {btnClass, errorBanner, lane, mono, pillSoft, track, trackFill} from "@/components/lane/classes";
 import {AlertIcon, PlusIcon} from "@/components/lane/icons";
 import {EditTaskModal} from "@/components/todo/EditTaskModal";
 import {EmptyState} from "@/components/todo/EmptyState";
@@ -21,6 +22,9 @@ const MOBILE_FILTERS: Array<{key: TaskFilter; label: string}> = [
     {key: "active", label: "Active"},
     {key: "completed", label: "Done"},
 ];
+
+const FAB_CLASS =
+    "fixed right-[18px] bottom-[calc(24px+env(safe-area-inset-bottom,0px))] z-[25] hidden h-[54px] w-[54px] items-center justify-center rounded-[18px] border border-transparent bg-ln-accent p-0 text-white shadow-[0_8px_22px_rgba(74,72,194,0.42)] [transition:background_0.14s,box-shadow_0.14s,border-color_0.14s] enabled:hover:bg-ln-accent-600 max-[820px]:inline-flex";
 
 function formatToday(): string {
     return new Date().toLocaleDateString("en-US", {weekday: "short", month: "short", day: "numeric"});
@@ -66,53 +70,51 @@ export const TodoPage = React.memo(() => {
         return (
             <React.Fragment>
                 {error && (
-                    <div className="ln-error-banner" style={{margin: "4px 14px 10px"}}>
+                    <div className={errorBanner + " mx-3.5 mt-1 mb-2.5"}>
                         <AlertIcon size={16} />
                         <span>{error}</span>
                     </div>
                 )}
                 {filter !== "completed" && activeTasks.map(task => <TaskRow key={task.id} task={task} onOpen={() => openEdit(task)} />)}
-                {filter === "active" && activeTasks.length === 0 && <div className="ln-filter-empty">All clear — nothing active.</div>}
+                {filter === "active" && activeTasks.length === 0 && <div className="px-4 py-9 text-center text-[13.5px] text-ln-ink-4">All clear — nothing active.</div>}
                 {filter === "all" && completedTasks.length > 0 && (
-                    <div className="ln-done-divider">
-                        <span className="ln-done-label">Completed</span>
-                        <span className="mono" style={{fontSize: 11}}>
-                            {completedTasks.length}
-                        </span>
-                        <span className="ln-done-line" />
+                    <div className="flex items-center gap-2 px-3.5 pt-4 pb-2 text-ln-ink-4">
+                        <span className="text-[12px] font-bold tracking-[0.04em] uppercase">Completed</span>
+                        <span className={mono + " text-[11px]"}>{completedTasks.length}</span>
+                        <span className="h-px flex-1 bg-ln-line" />
                     </div>
                 )}
                 {filter !== "active" && completedTasks.map(task => <TaskRow key={task.id} task={task} onOpen={() => openEdit(task)} />)}
-                {filter === "completed" && completedTasks.length === 0 && <div className="ln-filter-empty">Nothing completed yet.</div>}
+                {filter === "completed" && completedTasks.length === 0 && <div className="px-4 py-9 text-center text-[13.5px] text-ln-ink-4">Nothing completed yet.</div>}
             </React.Fragment>
         );
     };
 
     return (
-        <div className="lane ln-app">
+        <div className={lane + " flex bg-ln-surface"}>
             <Sidebar counts={counts} filter={filter} username={username} onFilterChange={setFilter} onLogout={() => setModal({kind: "logout"})} onNewTask={() => setModal({kind: "new"})} />
 
-            <div className="ln-main">
+            <div className="flex min-w-0 flex-1 flex-col">
                 {/* mobile header */}
-                <div className="ln-mobile-top">
-                    <div style={{display: "flex", alignItems: "center", justifyContent: "space-between"}}>
+                <div className="hidden border-b border-ln-line px-[18px] pt-4 pb-3.5 max-[820px]:block">
+                    <div className="flex items-center justify-between">
                         <div>
-                            <h1 style={{fontSize: 27, fontWeight: 700, letterSpacing: "-0.035em"}}>Tasks</h1>
-                            <div className="mono" style={{fontSize: 12.5, color: "var(--ln-ink-3)", marginTop: 1}}>
+                            <h1 className="text-[27px] font-bold tracking-[-0.035em]">Tasks</h1>
+                            <div className={mono + " mt-px text-[12.5px] text-ln-ink-3"}>
                                 {formatToday()} · {completedPercent}%
                             </div>
                         </div>
-                        <button aria-label="Account" onClick={() => setModal({kind: "logout"})} style={{border: "none", background: "transparent", padding: 0, display: "flex"}}>
+                        <button aria-label="Account" className="flex border-none bg-transparent p-0" onClick={() => setModal({kind: "logout"})}>
                             <Avatar initials={(username ?? "?").slice(0, 1).toUpperCase()} size={34} />
                         </button>
                     </div>
-                    <div className="ln-track" style={{marginTop: 14, height: 6}}>
-                        <div className="ln-track-fill" style={{width: completedPercent + "%"}} />
+                    <div className={track} style={{marginTop: 14, height: 6}}>
+                        <div className={trackFill} style={{width: completedPercent + "%"}} />
                     </div>
-                    <div style={{display: "flex", gap: 7, marginTop: 14}}>
+                    <div className="mt-3.5 flex gap-[7px]">
                         {MOBILE_FILTERS.map(item => (
                             <button
-                                className={"ln-btn ln-btn-sm " + (filter === item.key ? "ln-btn-primary" : "ln-btn-ghost")}
+                                className={btnClass(filter === item.key ? "primary" : "ghost", {sm: true})}
                                 key={item.key}
                                 onClick={() => setFilter(item.key)}
                                 style={{borderRadius: 999, height: 30}}
@@ -124,28 +126,28 @@ export const TodoPage = React.memo(() => {
                 </div>
 
                 {/* desktop header */}
-                <div className="ln-main-header">
-                    <div style={{display: "flex", alignItems: "center", gap: 10}}>
-                        <h1 style={{fontSize: 24, fontWeight: 700, letterSpacing: "-0.03em"}}>Tasks</h1>
-                        <span className="ln-pill ln-pill-soft mono">{formatToday()}</span>
+                <div className="border-b border-ln-line px-8 pt-6 pb-[18px] max-[820px]:hidden">
+                    <div className="flex items-center gap-2.5">
+                        <h1 className="text-[24px] font-bold tracking-[-0.03em]">Tasks</h1>
+                        <span className={pillSoft + " " + mono}>{formatToday()}</span>
                     </div>
-                    <p style={{fontSize: 14, color: "var(--ln-ink-3)", marginTop: 5}}>
-                        <span style={{color: "var(--ln-ink-2)", fontWeight: 600}}>{activeTasks.length} active</span> · newest first
+                    <p className="mt-[5px] text-[14px] text-ln-ink-3">
+                        <span className="font-semibold text-ln-ink-2">{activeTasks.length} active</span> · newest first
                     </p>
-                    <div style={{display: "flex", alignItems: "center", gap: 14, marginTop: 18}}>
-                        <div className="ln-track" style={{flex: 1}}>
-                            <div className="ln-track-fill" style={{width: completedPercent + "%"}} />
+                    <div className="mt-[18px] flex items-center gap-3.5">
+                        <div className={track + " flex-1"}>
+                            <div className={trackFill} style={{width: completedPercent + "%"}} />
                         </div>
-                        <span className="mono" style={{fontSize: 12.5, color: "var(--ln-ink-2)", fontWeight: 600, whiteSpace: "nowrap", flex: "none"}}>
+                        <span className={mono + " flex-none text-[12.5px] font-semibold whitespace-nowrap text-ln-ink-2"}>
                             {completedTasks.length}/{tasks.length} · {completedPercent}%
                         </span>
                     </div>
                 </div>
 
-                <div className="ln-list">{renderList()}</div>
+                <div className="flex-1 overflow-y-auto px-5 pt-3 pb-[90px] max-[820px]:px-3 max-[820px]:pt-1 max-[820px]:pb-[calc(110px+env(safe-area-inset-bottom,0))]">{renderList()}</div>
             </div>
 
-            <button aria-label="New task" className="ln-fab ln-btn ln-btn-primary" onClick={() => setModal({kind: "new"})}>
+            <button aria-label="New task" className={FAB_CLASS} onClick={() => setModal({kind: "new"})}>
                 <PlusIcon size={24} strokeWidth={2.3} />
             </button>
 

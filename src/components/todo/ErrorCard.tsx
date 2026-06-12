@@ -1,4 +1,5 @@
 import React from "react";
+import {btnClass, card, mark} from "@/components/lane/classes";
 import {AlertIcon} from "@/components/lane/icons";
 
 interface Props {
@@ -7,14 +8,14 @@ interface Props {
 }
 
 export const ErrorCard = React.memo<Props>(({message, onRetry}) => (
-    <div style={{display: "flex", alignItems: "center", justifyContent: "center", padding: 32, minHeight: 360}}>
-        <div className="ln-card" style={{width: 420, maxWidth: "100%", boxShadow: "var(--ln-sh-2)", borderRadius: 18, padding: 28, textAlign: "center"}}>
-            <span className="ln-mark" style={{width: 52, height: 52, borderRadius: 15, background: "var(--ln-red-soft)", margin: "0 auto 16px", boxShadow: "none"}}>
-                <AlertIcon size={24} style={{color: "var(--ln-red)"}} />
+    <div className="flex min-h-[360px] items-center justify-center p-8">
+        <div className={card + " w-[420px] max-w-full p-7 text-center"} style={{boxShadow: "var(--shadow-ln-2)", borderRadius: 18}}>
+            <span className={mark} style={{width: 52, height: 52, borderRadius: 15, background: "var(--color-ln-red-soft)", margin: "0 auto 16px", boxShadow: "none"}}>
+                <AlertIcon className="text-ln-red" size={24} />
             </span>
-            <h2 style={{fontSize: 21, fontWeight: 700, letterSpacing: "-0.025em"}}>Couldn't load your tasks</h2>
-            <p style={{fontSize: 14.5, color: "var(--ln-ink-3)", marginTop: 8, lineHeight: 1.55}}>{message}</p>
-            <button className="ln-btn ln-btn-primary ln-btn-block" onClick={onRetry} style={{height: 44, marginTop: 20}}>
+            <h2 className="text-[21px] font-bold tracking-tight">Couldn't load your tasks</h2>
+            <p className="mt-2 text-[14.5px] leading-[1.55] text-ln-ink-3">{message}</p>
+            <button className={btnClass("primary", {block: true})} onClick={onRetry} style={{height: 44, marginTop: 20}}>
                 Retry
             </button>
         </div>

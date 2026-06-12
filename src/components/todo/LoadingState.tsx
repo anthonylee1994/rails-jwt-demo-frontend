@@ -1,4 +1,5 @@
 import React from "react";
+import {skel, spin} from "@/components/lane/classes";
 import {SpinnerIcon} from "@/components/lane/icons";
 
 const SKELETON_WIDTHS = [88, 72, 94, 64, 80, 70];
@@ -6,13 +7,13 @@ const SKELETON_WIDTHS = [88, 72, 94, 64, 80, 70];
 export const LoadingState = React.memo(() => (
     <div>
         {SKELETON_WIDTHS.map((width, index) => (
-            <div key={index} style={{display: "flex", alignItems: "center", gap: 13, padding: "13px 14px"}}>
-                <div className="ln-skel" style={{width: 21, height: 21, borderRadius: 6.5, flex: "none"}} />
-                <div className="ln-skel" style={{width: width + "%", maxWidth: 360, height: 14}} />
+            <div className="flex items-center gap-[13px] px-3.5 py-[13px]" key={index}>
+                <div className={skel} style={{width: 21, height: 21, borderRadius: 6.5, flex: "none"}} />
+                <div className={skel} style={{width: width + "%", maxWidth: 360, height: 14}} />
             </div>
         ))}
-        <div style={{display: "flex", alignItems: "center", justifyContent: "center", gap: 9, marginTop: 18, color: "var(--ln-ink-4)", fontSize: 13}}>
-            <span className="ln-spin" style={{display: "flex", color: "var(--ln-accent)"}}>
+        <div className="mt-[18px] flex items-center justify-center gap-[9px] text-[13px] text-ln-ink-4">
+            <span className={spin + " flex text-ln-accent"}>
                 <SpinnerIcon size={16} />
             </span>
             Loading your tasks…

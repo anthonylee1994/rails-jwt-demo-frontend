@@ -1,5 +1,6 @@
 import React from "react";
 import {Modal} from "@/components/lane/Modal";
+import {btnClass, kbd, modalFooter, modalTitleInput, pillAccent} from "@/components/lane/classes";
 import {PlusIcon, XIcon} from "@/components/lane/icons";
 import {useTaskStore} from "@/stores/taskStore";
 
@@ -30,25 +31,25 @@ export const NewTaskModal = React.memo<Props>(({onClose}) => {
 
     return (
         <Modal onClose={onClose}>
-            <div style={{display: "flex", alignItems: "center", justifyContent: "space-between", padding: "16px 18px 0"}}>
-                <span className="ln-pill ln-pill-accent">New task</span>
-                <button aria-label="Close" className="ln-btn ln-btn-quiet" onClick={onClose} style={{width: 32, height: 32, padding: 0, borderRadius: 8}}>
+            <div className="flex items-center justify-between px-[18px] pt-4 pb-0">
+                <span className={pillAccent}>New task</span>
+                <button aria-label="Close" className={btnClass("quiet")} onClick={onClose} style={{width: 32, height: 32, padding: 0, borderRadius: 8}}>
                     <XIcon size={18} />
                 </button>
             </div>
-            <div style={{padding: "10px 18px 18px"}}>
-                <input autoFocus className="ln-modal-title-input" onChange={event => setName(event.target.value)} onKeyDown={handleKeyDown} placeholder="What needs doing?" value={name} />
-                <div style={{fontSize: 12.5, color: "var(--ln-ink-4)", marginTop: 6}}>Added to the top of your list — newest first.</div>
+            <div className="px-[18px] pt-2.5 pb-[18px]">
+                <input autoFocus className={modalTitleInput} onChange={event => setName(event.target.value)} onKeyDown={handleKeyDown} placeholder="What needs doing?" value={name} />
+                <div className="mt-1.5 text-[12.5px] text-ln-ink-4">Added to the top of your list — newest first.</div>
             </div>
-            <div className="ln-modal-footer">
-                <span style={{fontSize: 12, color: "var(--ln-ink-4)", whiteSpace: "nowrap"}}>
-                    <span className="ln-kbd">⏎</span> to save
+            <div className={modalFooter}>
+                <span className="text-[12px] whitespace-nowrap text-ln-ink-4">
+                    <span className={kbd}>⏎</span> to save
                 </span>
-                <div style={{display: "flex", gap: 9}}>
-                    <button className="ln-btn ln-btn-ghost ln-btn-sm" onClick={onClose}>
+                <div className="flex gap-[9px]">
+                    <button className={btnClass("ghost", {sm: true})} onClick={onClose}>
                         Cancel
                     </button>
-                    <button className="ln-btn ln-btn-primary ln-btn-sm" disabled={!name.trim()} onClick={submit}>
+                    <button className={btnClass("primary", {sm: true})} disabled={!name.trim()} onClick={submit}>
                         <PlusIcon size={15} strokeWidth={2.2} /> Add task
                     </button>
                 </div>

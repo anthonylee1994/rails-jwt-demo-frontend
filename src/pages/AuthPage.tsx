@@ -1,6 +1,7 @@
 import React from "react";
 import {AuthForm} from "@/components/auth/AuthForm";
 import {BrandPanel} from "@/components/auth/BrandPanel";
+import {lane} from "@/components/lane/classes";
 import {Logo} from "@/components/lane/atoms";
 import {useAuthStore} from "@/stores/authStore";
 import type {AuthMode} from "@/stores/authStore";
@@ -35,11 +36,11 @@ export const AuthPage = React.memo(() => {
     };
 
     return (
-        <div className="lane ln-auth">
+        <div className={lane + " flex h-full bg-ln-surface"}>
             <BrandPanel />
-            <div className="ln-auth-main">
-                <div className="ln-auth-card">
-                    <div className="ln-auth-logo-mobile">
+            <div className="flex flex-1 items-center justify-center overflow-y-auto px-6 py-10">
+                <div className="w-[372px] max-w-full">
+                    <div className="mb-[30px] hidden max-[980px]:block">
                         <Logo />
                     </div>
                     <AuthForm error={error} isLogin={isLogin} isSubmitting={isSubmitting} passwordInputRef={passwordInputRef} onSubmit={handleSubmit} onToggleMode={toggleMode} />

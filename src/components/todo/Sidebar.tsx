@@ -1,5 +1,6 @@
 import React from "react";
 import {Avatar, Logo} from "@/components/lane/atoms";
+import {btnClass, mono, navClass, navCountClass} from "@/components/lane/classes";
 import {CheckIcon, ChevronDownIcon, InboxIcon, LogoutIcon, PlusIcon, UpcomingIcon} from "@/components/lane/icons";
 import type {TaskFilter} from "@/types/TaskFilter";
 
@@ -41,53 +42,52 @@ export const Sidebar = React.memo<Props>(({counts, filter, username, onFilterCha
     const displayName = username ?? "account";
 
     return (
-        <div className="ln-sidebar">
-            <div style={{padding: "0 8px 16px"}}>
+        <div className="relative flex w-[248px] flex-none flex-col border-r border-ln-border bg-ln-canvas px-3.5 pt-5 pb-3.5 max-[820px]:hidden">
+            <div className="px-2 pb-4">
                 <Logo size={26} text={18} />
             </div>
-            <button className="ln-btn ln-btn-primary" onClick={onNewTask} style={{width: "100%", justifyContent: "flex-start", marginBottom: 18}}>
+            <button className={btnClass("primary")} onClick={onNewTask} style={{width: "100%", justifyContent: "flex-start", marginBottom: 18}}>
                 <PlusIcon size={17} strokeWidth={2.1} /> New task
             </button>
-            <div style={{display: "flex", flexDirection: "column", gap: 2}}>
+            <div className="flex flex-col gap-0.5">
                 {NAV_ITEMS.map(({key, label, Icon}) => (
-                    <button className={"ln-nav" + (key === filter ? " is-active" : "")} key={key} onClick={() => onFilterChange(key)}>
+                    <button className={navClass(key === filter)} key={key} onClick={() => onFilterChange(key)}>
                         <Icon size={17} /> {label}
-                        <span className="ln-navcount mono">{counts[key]}</span>
+                        <span className={navCountClass(key === filter)}>{counts[key]}</span>
                     </button>
                 ))}
             </div>
-            <div style={{flex: 1}} />
+            <div className="flex-1" />
             <div ref={menuRef}>
                 {menuOpen && (
-                    <div className="ln-account-pop">
-                        <div style={{display: "flex", alignItems: "center", gap: 10, padding: "8px 9px 10px"}}>
+                    <div className="absolute right-3.5 bottom-[66px] left-3.5 z-30 rounded-[13px] border border-ln-border bg-ln-surface p-1.5 shadow-ln-3">
+                        <div className="flex items-center gap-2.5 px-[9px] pt-2 pb-2.5">
                             <Avatar initials={displayName.slice(0, 1).toUpperCase()} size={36} />
-                            <div style={{minWidth: 0}}>
-                                <div style={{fontSize: 14, fontWeight: 700, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap"}}>{displayName}</div>
-                                <div className="mono" style={{fontSize: 11, color: "var(--ln-ink-4)", whiteSpace: "nowrap"}}>
-                                    Signed in
-                                </div>
+                            <div className="min-w-0">
+                                <div className="truncate text-[14px] font-bold">{displayName}</div>
+                                <div className={mono + " text-[11px] whitespace-nowrap text-ln-ink-4"}>Signed in</div>
                             </div>
                         </div>
-                        <div style={{height: 1, background: "var(--ln-line)", margin: "2px 4px 6px"}} />
+                        <div className="mx-1 mt-0.5 mb-1.5 h-px bg-ln-line" />
                         <button
-                            className="ln-nav"
+                            className={navClass()}
                             onClick={() => {
                                 setMenuOpen(false);
                                 onLogout();
                             }}
-                            style={{color: "var(--ln-red)"}}
+                            style={{color: "var(--color-ln-red)"}}
                         >
                             <LogoutIcon size={16} /> Log out
                         </button>
                     </div>
                 )}
-                <button className="ln-account-row" onClick={() => setMenuOpen(!menuOpen)}>
+                <button
+                    className="flex w-full items-center gap-2.5 rounded-ln-md border border-ln-border bg-ln-surface px-2 py-[9px] text-left [transition:background_0.12s] hover:bg-ln-subtle"
+                    onClick={() => setMenuOpen(!menuOpen)}
+                >
                     <Avatar initials={displayName.slice(0, 1).toUpperCase()} size={30} />
-                    <div className="ln-account-name" style={{minWidth: 0, flex: 1}}>
-                        {displayName}
-                    </div>
-                    <span style={{color: "var(--ln-ink-4)", display: "flex"}}>
+                    <div className="min-w-0 flex-1 truncate text-[13.5px] font-semibold">{displayName}</div>
+                    <span className="flex text-ln-ink-4">
                         <ChevronDownIcon size={15} />
                     </span>
                 </button>

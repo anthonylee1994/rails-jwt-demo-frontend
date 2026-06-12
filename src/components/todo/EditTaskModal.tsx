@@ -1,5 +1,6 @@
 import React from "react";
 import {Modal} from "@/components/lane/Modal";
+import {btnClass, checkClass, modalFooter, modalTitleInput, mono} from "@/components/lane/classes";
 import {CheckSmIcon, TrashIcon, XIcon} from "@/components/lane/icons";
 import {useTaskStore} from "@/stores/taskStore";
 import type {Task} from "@/types/Task";
@@ -62,43 +63,39 @@ export const EditTaskModal = React.memo<Props>(({task, onClose}) => {
 
     return (
         <Modal onClose={onClose}>
-            <div style={{display: "flex", alignItems: "center", justifyContent: "space-between", padding: "16px 18px 0"}}>
-                <button onClick={() => setCompleted(!completed)} style={{display: "flex", alignItems: "center", gap: 9, border: "none", background: "transparent", padding: 0}}>
-                    <span className={"ln-check" + (completed ? " is-done" : "")}>
+            <div className="flex items-center justify-between px-[18px] pt-4 pb-0">
+                <button className="flex items-center gap-[9px] border-none bg-transparent p-0" onClick={() => setCompleted(!completed)}>
+                    <span className={checkClass(completed)}>
                         <CheckSmIcon size={13} strokeWidth={2.4} />
                     </span>
-                    <span style={{fontSize: 13, fontWeight: 600, color: "var(--ln-ink-2)"}}>{completed ? "Completed" : "Mark complete"}</span>
+                    <span className="text-[13px] font-semibold text-ln-ink-2">{completed ? "Completed" : "Mark complete"}</span>
                 </button>
-                <button aria-label="Close" className="ln-btn ln-btn-quiet" onClick={onClose} style={{width: 32, height: 32, padding: 0, borderRadius: 8}}>
+                <button aria-label="Close" className={btnClass("quiet")} onClick={onClose} style={{width: 32, height: 32, padding: 0, borderRadius: 8}}>
                     <XIcon size={18} />
                 </button>
             </div>
-            <div style={{padding: "12px 18px 16px"}}>
-                <input autoFocus className="ln-modal-title-input" onChange={event => setName(event.target.value)} onKeyDown={handleKeyDown} placeholder="Task name" value={name} />
-                <div style={{display: "flex", gap: 22, marginTop: 16, paddingTop: 14, borderTop: "1px solid var(--ln-line)"}}>
+            <div className="px-[18px] pt-3 pb-4">
+                <input autoFocus className={modalTitleInput} onChange={event => setName(event.target.value)} onKeyDown={handleKeyDown} placeholder="Task name" value={name} />
+                <div className="mt-4 flex gap-[22px] border-t border-ln-line pt-3.5">
                     <div>
-                        <div style={{fontSize: 11, color: "var(--ln-ink-4)", fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.05em"}}>Created</div>
-                        <div className="mono" style={{fontSize: 12.5, color: "var(--ln-ink-2)", marginTop: 3}}>
-                            {formatDateTime(task.created_at)}
-                        </div>
+                        <div className="text-[11px] font-semibold tracking-wider text-ln-ink-4 uppercase">Created</div>
+                        <div className={mono + " mt-[3px] text-[12.5px] text-ln-ink-2"}>{formatDateTime(task.created_at)}</div>
                     </div>
                     <div>
-                        <div style={{fontSize: 11, color: "var(--ln-ink-4)", fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.05em"}}>Updated</div>
-                        <div className="mono" style={{fontSize: 12.5, color: "var(--ln-ink-2)", marginTop: 3}}>
-                            {formatDateTime(task.updated_at)}
-                        </div>
+                        <div className="text-[11px] font-semibold tracking-wider text-ln-ink-4 uppercase">Updated</div>
+                        <div className={mono + " mt-[3px] text-[12.5px] text-ln-ink-2"}>{formatDateTime(task.updated_at)}</div>
                     </div>
                 </div>
             </div>
-            <div className="ln-modal-footer">
-                <button className="ln-btn ln-btn-quiet ln-btn-sm" onClick={handleDelete} style={{color: "var(--ln-red)"}}>
+            <div className={modalFooter}>
+                <button className={btnClass("quiet", {sm: true})} onClick={handleDelete} style={{color: "var(--color-ln-red)"}}>
                     <TrashIcon size={15} /> Delete
                 </button>
-                <div style={{display: "flex", gap: 9}}>
-                    <button className="ln-btn ln-btn-ghost ln-btn-sm" onClick={onClose}>
+                <div className="flex gap-[9px]">
+                    <button className={btnClass("ghost", {sm: true})} onClick={onClose}>
                         Cancel
                     </button>
-                    <button className="ln-btn ln-btn-primary ln-btn-sm" disabled={!name.trim()} onClick={save}>
+                    <button className={btnClass("primary", {sm: true})} disabled={!name.trim()} onClick={save}>
                         Save changes
                     </button>
                 </div>

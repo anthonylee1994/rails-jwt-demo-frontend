@@ -1,5 +1,6 @@
 import React from "react";
 import {Modal} from "@/components/lane/Modal";
+import {btnClass, mark} from "@/components/lane/classes";
 import {LogoutIcon} from "@/components/lane/icons";
 
 interface Props {
@@ -9,17 +10,17 @@ interface Props {
 
 export const LogoutDialog = React.memo<Props>(({onCancel, onConfirm}) => (
     <Modal onClose={onCancel} width={380}>
-        <div className="ln-logout-dialog">
-            <span className="ln-mark" style={{width: 46, height: 46, borderRadius: 13, background: "var(--ln-red-soft)", margin: "0 auto 14px", boxShadow: "none"}}>
-                <LogoutIcon size={22} style={{color: "var(--ln-red)"}} />
+        <div className="p-6 text-center max-[640px]:pb-[calc(24px+env(safe-area-inset-bottom,0))]">
+            <span className={mark} style={{width: 46, height: 46, borderRadius: 13, background: "var(--color-ln-red-soft)", margin: "0 auto 14px", boxShadow: "none"}}>
+                <LogoutIcon className="text-ln-red" size={22} />
             </span>
-            <h3 style={{fontSize: 19, fontWeight: 700, letterSpacing: "-0.02em"}}>Log out of Lane?</h3>
-            <p style={{fontSize: 14, color: "var(--ln-ink-3)", marginTop: 7, lineHeight: 1.5}}>Your token will be cleared from this device. You'll need to sign in again to see your tasks.</p>
-            <div style={{display: "flex", gap: 10, marginTop: 20}}>
-                <button className="ln-btn ln-btn-ghost ln-btn-block" onClick={onCancel}>
+            <h3 className="text-[19px] font-bold tracking-[-0.02em]">Log out of Lane?</h3>
+            <p className="mt-[7px] text-[14px] leading-normal text-ln-ink-3">Your token will be cleared from this device. You'll need to sign in again to see your tasks.</p>
+            <div className="mt-5 flex gap-2.5">
+                <button className={btnClass("ghost", {block: true})} onClick={onCancel}>
                     Stay signed in
                 </button>
-                <button className="ln-btn ln-btn-danger ln-btn-block" onClick={onConfirm}>
+                <button className={btnClass("danger", {block: true})} onClick={onConfirm}>
                     Log out
                 </button>
             </div>
