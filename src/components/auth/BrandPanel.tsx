@@ -4,7 +4,7 @@ import {CheckIcon, CheckSmIcon, LockIcon} from "@/components/lane/icons";
 const PREVIEW_ROWS = [
     {title: "Review JWT refresh logic", done: true},
     {title: "Ship task scoping to users", done: false},
-    {title: "Reply to Anthony re: API", done: false},
+    {title: "Reply to John re: API", done: false},
 ];
 
 const BrandPreview = React.memo(() => (
