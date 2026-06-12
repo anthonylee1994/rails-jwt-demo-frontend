@@ -8,7 +8,9 @@ React + TypeScript frontend for a JWT-authenticated todo app. It pairs with the 
 - **Vite** - dev server and production build
 - **Zustand** - auth and task state
 - **Axios** - API client with JWT request/response handling
+- **React Router** - single-page routing and fallback redirects
 - **React Icons** - UI icons
+- **Custom CSS** - responsive Lane-style auth and task UI
 
 ## Features
 
@@ -19,6 +21,7 @@ React + TypeScript frontend for a JWT-authenticated todo app. It pairs with the 
 - Auto-logout when an authenticated request receives `401 Unauthorized`
 - Per-user todo list scoped by JWT identity
 - Create, rename, complete/uncomplete, and delete tasks
+- Filter tasks by all, active, or completed
 - Responsive auth and todo screens
 
 ## Getting Started
@@ -65,25 +68,33 @@ src/
 ├── api/
 │   └── apiClient.ts             # Axios instance, JWT interceptors, error helper
 ├── components/
-│   ├── TaskItem.tsx             # Individual task row
 │   ├── auth/
-│   │   ├── AuthCard.tsx         # Login/register panel
-│   │   ├── AuthForm.tsx         # Auth form controls
-│   │   └── AuthHero.tsx         # Auth page visual copy
+│   │   ├── AuthForm.tsx         # Login/register form controls
+│   │   └── BrandPanel.tsx       # Auth page brand panel
+│   ├── lane/
+│   │   ├── Modal.tsx            # Shared modal shell
+│   │   ├── atoms.tsx            # Shared UI primitives
+│   │   └── icons.tsx            # Inline UI icons
 │   └── todo/
-│       ├── TodoCreateForm.tsx   # New task form
-│       ├── TodoHeader.tsx       # Todo page header/logout
-│       ├── TodoList.tsx         # Task list and loading/empty states
-│       ├── TodoQueueCard.tsx    # Main task queue card
-│       └── TodoStats.tsx        # Completion summary
+│       ├── EditTaskModal.tsx    # Rename, complete, and delete task modal
+│       ├── EmptyState.tsx       # Empty task list prompt
+│       ├── ErrorCard.tsx        # Load failure card
+│       ├── LoadingState.tsx     # Initial loading state
+│       ├── LogoutDialog.tsx     # Logout confirmation modal
+│       ├── NewTaskModal.tsx     # New task form modal
+│       ├── Sidebar.tsx          # Desktop filters, counts, and account actions
+│       └── TaskRow.tsx          # Individual task row
 ├── pages/
 │   ├── AuthPage.tsx             # Auth screen
 │   └── TodoPage.tsx             # Todo screen
+├── styles/
+│   └── lane.css                 # App layout, theme, and responsive styles
 ├── stores/
 │   ├── authStore.ts             # Auth state and JWT login/logout logic
 │   └── taskStore.ts             # Task CRUD state
 ├── types/
-│   └── Task.ts                  # Task interface
+│   ├── Task.ts                  # Task interface
+│   └── TaskFilter.ts            # Todo filter type
 ├── app.tsx                       # Root auth/todo switch
 └── main.tsx                      # React entrypoint
 ```
