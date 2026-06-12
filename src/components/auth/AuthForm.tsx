@@ -26,8 +26,7 @@ export const AuthForm = React.memo<Props>(({error, isLogin, isSubmitting, passwo
                         <label className="ln-label" htmlFor="username">
                             Username
                         </label>
-                        <input autoComplete="username" autoFocus className="ln-input" id="username" name="username" placeholder="yourname" required />
-                        {!isLogin && <span className="ln-hint">5–20 characters · letters, numbers, . _ - · starts and ends with a letter or number</span>}
+                        <input autoComplete="username" autoFocus className="ln-input" id="username" name="username" placeholder="Username" required />
                     </div>
 
                     <div className="ln-field">
@@ -40,7 +39,7 @@ export const AuthForm = React.memo<Props>(({error, isLogin, isSubmitting, passwo
                                 className="ln-input"
                                 id="password"
                                 name="password"
-                                placeholder="••••••••••"
+                                placeholder="Password"
                                 ref={passwordInputRef}
                                 required
                                 style={{paddingRight: 42}}
