@@ -1,97 +1,83 @@
 import React from "react";
-import {Alert, Button, Field, Input, Stack} from "@chakra-ui/react";
+import {AlertIcon, ArrowRightIcon, EyeIcon, EyeOffIcon, SpinnerIcon} from "@/components/lane/icons";
 
 interface Props {
     error: string | null;
     isLogin: boolean;
     isSubmitting: boolean;
     passwordInputRef: React.RefObject<HTMLInputElement | null>;
-    onSubmit(event: React.FormEvent<HTMLFormElement>): void;
+    onSubmit(event: React.SubmitEvent<HTMLFormElement>): void;
+    onToggleMode(): void;
 }
 
-export const AuthForm = React.memo<Props>(({error, isLogin, isSubmitting, passwordInputRef, onSubmit}) => {
+export const AuthForm = React.memo<Props>(({error, isLogin, isSubmitting, passwordInputRef, onSubmit, onToggleMode}) => {
+    const [showPassword, setShowPassword] = React.useState(false);
+
     return (
-        <form onSubmit={onSubmit}>
-            <Stack gap="5">
-                {error && (
-                    <Alert.Root
-                        bg="rgba(239,68,68,0.1)"
-                        borderColor="rgba(239,68,68,0.25)"
-                        borderWidth="1px"
-                        rounded="xl"
-                        status="error"
-                    >
-                        <Alert.Indicator />
-                        <Alert.Title color="rgba(252,165,165,0.9)">{error}</Alert.Title>
-                    </Alert.Root>
-                )}
-                <Field.Root required>
-                    <Field.Label color="rgba(210,208,240,0.85)" fontWeight="semibold" fontSize="sm">
-                        Username
-                        <Field.RequiredIndicator />
-                    </Field.Label>
-                    <Input
-                        autoCapitalize="none"
-                        autoComplete="username"
-                        bg="rgba(255,255,255,0.05)"
-                        borderColor="rgba(255,255,255,0.1)"
-                        color="rgba(240,238,255,0.95)"
-                        name="username"
-                        placeholder="Username"
-                        rounded="xl"
-                        size="lg"
-                        _placeholder={{color: "rgba(180,178,210,0.4)"}}
-                        _focusVisible={{
-                            borderColor: "rgba(124,111,255,0.7)",
-                            boxShadow: "0 0 0 3px rgba(124,111,255,0.18)",
-                            bg: "rgba(255,255,255,0.07)",
-                            zIndex: 1,
-                        }}
-                    />
-                </Field.Root>
-                <Field.Root required>
-                    <Field.Label color="rgba(210,208,240,0.85)" fontWeight="semibold" fontSize="sm">
-                        Password
-                        <Field.RequiredIndicator />
-                    </Field.Label>
-                    <Input
-                        autoComplete={isLogin ? "current-password" : "new-password"}
-                        bg="rgba(255,255,255,0.05)"
-                        borderColor="rgba(255,255,255,0.1)"
-                        color="rgba(240,238,255,0.95)"
-                        name="password"
-                        placeholder="Enter your password"
-                        ref={passwordInputRef}
-                        rounded="xl"
-                        size="lg"
-                        type="password"
-                        _placeholder={{color: "rgba(180,178,210,0.4)"}}
-                        _focusVisible={{
-                            borderColor: "rgba(124,111,255,0.7)",
-                            boxShadow: "0 0 0 3px rgba(124,111,255,0.18)",
-                            bg: "rgba(255,255,255,0.07)",
-                            zIndex: 1,
-                        }}
-                    />
-                </Field.Root>
-                <Button
-                    bg="rgba(124,111,255,0.9)"
-                    borderColor="rgba(124,111,255,0.4)"
-                    borderWidth="1px"
-                    boxShadow="0 8px 32px rgba(124,111,255,0.3)"
-                    color="white"
-                    loading={isSubmitting}
-                    mt="2"
-                    rounded="xl"
-                    size="lg"
-                    type="submit"
-                    w="full"
-                    _hover={{bg: "rgba(124,111,255,1)", boxShadow: "0 12px 40px rgba(124,111,255,0.45)"}}
-                    _active={{bg: "rgba(100,90,220,0.9)"}}
-                >
-                    {isLogin ? "Login" : "Register"}
-                </Button>
-            </Stack>
-        </form>
+        <React.Fragment>
+            <div style={{marginBottom: 26}}>
+                <h1 style={{fontSize: 25, fontWeight: 700, letterSpacing: "-0.03em"}}>{isLogin ? "Welcome back" : "Create your account"}</h1>
+                <p style={{fontSize: 15, color: "var(--ln-ink-3)", marginTop: 6}}>{isLogin ? "Sign in to pick up where you left off." : "Pick a username and password to get started."}</p>
+            </div>
+
+            <form onSubmit={onSubmit}>
+                <div style={{display: "flex", flexDirection: "column", gap: 17}}>
+                    <div className="ln-field">
+                        <label className="ln-label" htmlFor="username">
+                            Username
+                        </label>
+                        <input autoComplete="username" autoFocus className="ln-input" id="username" name="username" placeholder="yourname" required />
+                        {!isLogin && <span className="ln-hint">5–20 characters · letters, numbers, . _ - · starts and ends with a letter or number</span>}
+                    </div>
+
+                    <div className="ln-field">
+                        <label className="ln-label" htmlFor="password">
+                            Password
+                        </label>
+                        <div style={{position: "relative"}}>
+                            <input
+                                autoComplete={isLogin ? "current-password" : "new-password"}
+                                className="ln-input"
+                                id="password"
+                                name="password"
+                                placeholder="••••••••••"
+                                ref={passwordInputRef}
+                                required
+                                style={{paddingRight: 42}}
+                                type={showPassword ? "text" : "password"}
+                            />
+                            <button aria-label={showPassword ? "Hide password" : "Show password"} className="ln-input-trail" onClick={() => setShowPassword(!showPassword)} type="button">
+                                {showPassword ? <EyeOffIcon size={17} /> : <EyeIcon size={17} />}
+                            </button>
+                        </div>
+                        {!isLogin && <span className="ln-hint">Use at least 8 characters.</span>}
+                    </div>
+
+                    <button className="ln-btn ln-btn-primary ln-btn-block" disabled={isSubmitting} style={{height: 44, marginTop: 4}} type="submit">
+                        {isSubmitting ? (
+                            <SpinnerIcon className="ln-spin" size={17} />
+                        ) : (
+                            <React.Fragment>
+                                {isLogin ? "Sign in" : "Create account"} <ArrowRightIcon size={17} strokeWidth={2} />
+                            </React.Fragment>
+                        )}
+                    </button>
+                </div>
+            </form>
+
+            {error && (
+                <div className="ln-error-banner" style={{marginTop: 18}}>
+                    <AlertIcon size={16} />
+                    <span>{error}</span>
+                </div>
+            )}
+
+            <div className="ln-auth-divider">
+                <span>{isLogin ? "New to Lane?" : "Already registered?"}</span>
+            </div>
+            <button className="ln-btn ln-btn-ghost ln-btn-block" onClick={onToggleMode} style={{height: 44}} type="button">
+                {isLogin ? "Create an account" : "Sign in instead"}
+            </button>
+        </React.Fragment>
     );
 });
