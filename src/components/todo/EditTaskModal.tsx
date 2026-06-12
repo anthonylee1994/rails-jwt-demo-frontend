@@ -3,6 +3,7 @@ import {Modal} from "@/components/lane/Modal";
 import {ModalHeader} from "@/components/lane/ModalHeader";
 import {btnClass, checkClass, labelTiny, modalFooter, modalTitleInput, mono} from "@/components/lane/classes";
 import {CheckSmIcon, TrashIcon} from "@/components/lane/icons";
+import {useTrimmedSubmit} from "@/hooks/useTrimmedSubmit";
 import {useTaskStore} from "@/stores/taskStore";
 import type {Task} from "@/types/Task";
 
@@ -27,38 +28,40 @@ export const EditTaskModal = React.memo<Props>(({task, onClose}) => {
     const updateTask = useTaskStore(state => state.updateTask);
     const deleteTask = useTaskStore(state => state.deleteTask);
 
-    const save = () => {
-        const trimmed = name.trim();
+    const save = React.useCallback(
+        async (trimmed: string) => {
+            const changes: Partial<Pick<Task, "name" | "completed">> = {};
 
-        if (!trimmed) {
-            return;
-        }
+            if (trimmed !== task.name) {
+                changes.name = trimmed;
+            }
 
-        const changes: Partial<Pick<Task, "name" | "completed">> = {};
+            if (completed !== task.completed) {
+                changes.completed = completed;
+            }
 
-        if (trimmed !== task.name) {
-            changes.name = trimmed;
-        }
+            if (Object.keys(changes).length === 0) {
+                onClose();
 
-        if (completed !== task.completed) {
-            changes.completed = completed;
-        }
+                return;
+            }
 
-        if (Object.keys(changes).length > 0) {
-            updateTask(task.id, changes);
-        }
+            const ok = await updateTask(task.id, changes);
 
-        onClose();
-    };
+            if (ok) {
+                onClose();
+            }
+        },
+        [task.name, task.completed, task.id, completed, updateTask, onClose]
+    );
 
-    const handleDelete = () => {
-        deleteTask(task.id);
-        onClose();
-    };
+    const {trimmed, handleKeyDown, isDisabled} = useTrimmedSubmit({value: name, onSubmit: save});
 
-    const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
-        if (event.key === "Enter") {
-            save();
+    const handleDelete = async () => {
+        const ok = await deleteTask(task.id);
+
+        if (ok) {
+            onClose();
         }
     };
 
@@ -89,14 +92,14 @@ export const EditTaskModal = React.memo<Props>(({task, onClose}) => {
                 </div>
             </div>
             <div className={modalFooter}>
-                <button className={btnClass("quiet", {sm: true})} onClick={handleDelete} style={{color: "var(--color-ln-red)"}}>
+                <button className={btnClass("quiet", {sm: true})} onClick={() => void handleDelete()} style={{color: "var(--color-ln-red)"}}>
                     <TrashIcon size={15} /> Delete
                 </button>
                 <div className="flex gap-[9px]">
                     <button className={btnClass("ghost", {sm: true})} onClick={onClose}>
                         Cancel
                     </button>
-                    <button className={btnClass("primary", {sm: true})} disabled={!name.trim()} onClick={save}>
+                    <button className={btnClass("primary", {sm: true})} disabled={isDisabled} onClick={() => void save(trimmed)}>
                         Save changes
                     </button>
                 </div>

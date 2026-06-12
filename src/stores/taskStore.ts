@@ -8,9 +8,10 @@ interface TaskState {
     isLoading: boolean;
     error: string | null;
     fetchTasks(): Promise<void>;
-    createTask(name: string): Promise<void>;
-    updateTask(id: string, changes: Partial<Pick<Task, "name" | "completed">>): Promise<void>;
-    deleteTask(id: string): Promise<void>;
+    createTask(name: string): Promise<boolean>;
+    updateTask(id: string, changes: Partial<Pick<Task, "name" | "completed">>): Promise<boolean>;
+    deleteTask(id: string): Promise<boolean>;
+    clearError(): void;
 }
 
 export const useTaskStore = create<TaskState>()((set, get) => ({
@@ -28,32 +29,53 @@ export const useTaskStore = create<TaskState>()((set, get) => ({
         );
     },
     async createTask(name) {
-        await runAsync(
-            set,
-            {
-                onSuccess: task => ({tasks: [task, ...get().tasks]}),
-            },
-            async () => (await apiClient.post<Task>("/tasks", {name})).data
-        );
+        try {
+            await runAsync(
+                set,
+                {
+                    onSuccess: task => ({tasks: [task, ...get().tasks]}),
+                },
+                async () => (await apiClient.post<Task>("/tasks", {name})).data
+            );
+
+            return true;
+        } catch {
+            return false;
+        }
     },
     async updateTask(id, changes) {
-        await runAsync(
-            set,
-            {
-                onSuccess: task => ({tasks: get().tasks.map(t => (t.id === id ? task : t))}),
-            },
-            async () => (await apiClient.put<Task>(`/tasks/${id}`, changes)).data
-        );
+        try {
+            await runAsync(
+                set,
+                {
+                    onSuccess: task => ({tasks: get().tasks.map(t => (t.id === id ? task : t))}),
+                },
+                async () => (await apiClient.put<Task>(`/tasks/${id}`, changes)).data
+            );
+
+            return true;
+        } catch {
+            return false;
+        }
     },
     async deleteTask(id) {
-        await runAsync(
-            set,
-            {
-                onSuccess: () => ({tasks: get().tasks.filter(t => t.id !== id)}),
-            },
-            async () => {
-                await apiClient.delete(`/tasks/${id}`);
-            }
-        );
+        try {
+            await runAsync(
+                set,
+                {
+                    onSuccess: () => ({tasks: get().tasks.filter(t => t.id !== id)}),
+                },
+                async () => {
+                    await apiClient.delete(`/tasks/${id}`);
+                }
+            );
+
+            return true;
+        } catch {
+            return false;
+        }
+    },
+    clearError() {
+        set({error: null});
     },
 }));

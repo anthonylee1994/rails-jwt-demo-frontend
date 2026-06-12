@@ -1,7 +1,7 @@
 import React from "react";
 import {Avatar} from "@/components/lane/atoms";
 import {btnClass, errorBanner, lane, mono, pillSoft, track, trackFill} from "@/components/lane/classes";
-import {AlertIcon, PlusIcon} from "@/components/lane/icons";
+import {AlertIcon, PlusIcon, XIcon} from "@/components/lane/icons";
 import {EditTaskModal} from "@/components/todo/EditTaskModal";
 import {EmptyState} from "@/components/todo/EmptyState";
 import {ErrorCard} from "@/components/todo/ErrorCard";
@@ -39,6 +39,7 @@ export const TodoPage = React.memo(() => {
     const isLoading = useTaskStore(state => state.isLoading);
     const error = useTaskStore(state => state.error);
     const fetchTasks = useTaskStore(state => state.fetchTasks);
+    const clearError = useTaskStore(state => state.clearError);
 
     React.useEffect(() => {
         fetchTasks();
@@ -73,6 +74,14 @@ export const TodoPage = React.memo(() => {
                     <div className={errorBanner + " mx-3.5 mt-1 mb-2.5"}>
                         <AlertIcon size={16} />
                         <span>{error}</span>
+                        <button
+                            aria-label="Dismiss error"
+                            className="ml-auto -mr-1 flex h-6 w-6 flex-none items-center justify-center rounded-md border-none bg-transparent p-0 text-[#a33833] hover:bg-[#f3d3d1]/60"
+                            onClick={() => clearError()}
+                            type="button"
+                        >
+                            <XIcon size={14} strokeWidth={2.2} />
+                        </button>
                     </div>
                 )}
                 {filter !== "completed" && activeTasks.map(task => <TaskRow key={task.id} task={task} onOpen={() => openEdit(task)} />)}

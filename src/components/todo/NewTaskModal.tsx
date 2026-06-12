@@ -3,6 +3,7 @@ import {Modal} from "@/components/lane/Modal";
 import {ModalHeader} from "@/components/lane/ModalHeader";
 import {btnClass, kbd, modalFooter, modalTitleInput, pillAccent} from "@/components/lane/classes";
 import {PlusIcon} from "@/components/lane/icons";
+import {useTrimmedSubmit} from "@/hooks/useTrimmedSubmit";
 import {useTaskStore} from "@/stores/taskStore";
 
 interface Props {
@@ -13,22 +14,18 @@ export const NewTaskModal = React.memo<Props>(({onClose}) => {
     const [name, setName] = React.useState("");
     const createTask = useTaskStore(state => state.createTask);
 
-    const submit = () => {
-        const trimmed = name.trim();
+    const submit = React.useCallback(
+        async (trimmed: string) => {
+            const ok = await createTask(trimmed);
 
-        if (!trimmed) {
-            return;
-        }
+            if (ok) {
+                onClose();
+            }
+        },
+        [createTask, onClose]
+    );
 
-        createTask(trimmed);
-        onClose();
-    };
-
-    const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
-        if (event.key === "Enter") {
-            submit();
-        }
-    };
+    const {trimmed, handleKeyDown, isDisabled} = useTrimmedSubmit({value: name, onSubmit: submit});
 
     return (
         <Modal onClose={onClose}>
@@ -45,7 +42,7 @@ export const NewTaskModal = React.memo<Props>(({onClose}) => {
                     <button className={btnClass("ghost", {sm: true})} onClick={onClose}>
                         Cancel
                     </button>
-                    <button className={btnClass("primary", {sm: true})} disabled={!name.trim()} onClick={submit}>
+                    <button className={btnClass("primary", {sm: true})} disabled={isDisabled} onClick={() => void submit(trimmed)}>
                         <PlusIcon size={15} strokeWidth={2.2} /> Add task
                     </button>
                 </div>
