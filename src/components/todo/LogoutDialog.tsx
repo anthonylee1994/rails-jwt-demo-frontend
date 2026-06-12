@@ -9,7 +9,7 @@ interface Props {
 
 export const LogoutDialog = React.memo<Props>(({onCancel, onConfirm}) => (
     <Modal onClose={onCancel} width={380}>
-        <div style={{padding: 24, textAlign: "center"}}>
+        <div className="ln-logout-dialog">
             <span className="ln-mark" style={{width: 46, height: 46, borderRadius: 13, background: "var(--ln-red-soft)", margin: "0 auto 14px", boxShadow: "none"}}>
                 <LogoutIcon size={22} style={{color: "var(--ln-red)"}} />
             </span>

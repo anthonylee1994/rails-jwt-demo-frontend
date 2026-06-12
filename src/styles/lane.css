@@ -723,6 +723,10 @@ button.ln-check.is-done:hover {
     padding: 2px 6px;
     border-radius: 5px;
 }
+.ln-logout-dialog {
+    padding: 24px;
+    text-align: center;
+}
 @media (max-width: 640px) {
     .ln-backdrop {
         align-items: flex-end;
@@ -737,6 +741,9 @@ button.ln-check.is-done:hover {
     }
     .ln-modal-footer {
         padding-bottom: calc(13px + env(safe-area-inset-bottom, 0px));
+    }
+    .ln-logout-dialog {
+        padding-bottom: calc(24px + env(safe-area-inset-bottom, 0px));
     }
 }
 
