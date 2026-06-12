@@ -18,22 +18,55 @@ interface Props {
 
 export const TodoQueueCard = React.memo<Props>(({completedCount, completedPercent, error, isLoading, newTaskName, tasks, onCreate, onNewTaskNameChange}) => {
     return (
-        <Card.Root borderColor="blackAlpha.100" overflow="hidden" rounded={{base: "2xl", md: "3xl"}} shadow="0 30px 90px rgba(50, 50, 93, 0.12)">
-            <Box bg="white" borderBottomColor="blackAlpha.100" borderBottomWidth="1px" px={{base: "5", md: "7"}} py={{base: "4", md: "5"}}>
+        <Card.Root
+            backdropFilter="blur(20px)"
+            bg="rgba(15,15,25,0.7)"
+            borderColor="rgba(255,255,255,0.07)"
+            borderWidth="1px"
+            boxShadow="0 40px 100px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.06)"
+            overflow="hidden"
+            rounded={{base: "2xl", md: "3xl"}}
+        >
+            <Box
+                bg="rgba(255,255,255,0.03)"
+                borderBottomColor="rgba(255,255,255,0.06)"
+                borderBottomWidth="1px"
+                px={{base: "5", md: "7"}}
+                py={{base: "4", md: "5"}}
+            >
                 <Flex align={{base: "flex-start", sm: "center"}} direction={{base: "column", sm: "row"}} gap="4" justify="space-between">
                     <Stack gap="1">
                         <Flex align="center" gap="2">
-                            <LuSparkles color="#635bff" />
-                            <Text color="#635bff" fontWeight="semibold" letterSpacing="0.08em" textStyle="xs" textTransform="uppercase">
+                            <LuSparkles color="#a78bfa" size="14" />
+                            <Text
+                                color="rgba(167,139,250,0.85)"
+                                fontWeight="semibold"
+                                letterSpacing="0.08em"
+                                textStyle="xs"
+                                textTransform="uppercase"
+                            >
                                 Today queue
                             </Text>
                         </Flex>
-                        <Heading color="#0a2540" fontSize={{base: "lg", md: "2xl"}} letterSpacing="-0.04em" lineHeight="1.2">
+                        <Heading
+                            color="rgba(240,238,255,0.95)"
+                            fontSize={{base: "lg", md: "2xl"}}
+                            letterSpacing="-0.04em"
+                            lineHeight="1.2"
+                        >
                             Keep the next action obvious.
                         </Heading>
                     </Stack>
                     {tasks.length > 0 && completedCount === tasks.length && (
-                        <Badge colorPalette="green" px="3" py="1" rounded="full">
+                        <Badge
+                            bg="rgba(0,229,160,0.12)"
+                            borderColor="rgba(0,229,160,0.25)"
+                            borderWidth="1px"
+                            color="rgba(0,229,160,0.9)"
+                            px="3"
+                            py="1"
+                            rounded="full"
+                        >
                             All done
                             <LuArrowUpRight />
                         </Badge>
@@ -44,9 +77,15 @@ export const TodoQueueCard = React.memo<Props>(({completedCount, completedPercen
                 <TodoCreateForm newTaskName={newTaskName} onChange={onNewTaskNameChange} onSubmit={onCreate} />
 
                 {error && (
-                    <Alert.Root borderColor="red.200" borderWidth="1px" rounded="xl" status="error">
+                    <Alert.Root
+                        bg="rgba(239,68,68,0.1)"
+                        borderColor="rgba(239,68,68,0.25)"
+                        borderWidth="1px"
+                        rounded="xl"
+                        status="error"
+                    >
                         <Alert.Indicator />
-                        <Alert.Title>{error}</Alert.Title>
+                        <Alert.Title color="rgba(252,165,165,0.9)">{error}</Alert.Title>
                     </Alert.Root>
                 )}
 

@@ -14,8 +14,9 @@ export const TodoCreateForm = React.memo<Props>(({newTaskName, onChange, onSubmi
             <Group attached w="full">
                 <Input
                     aria-label="New task name"
-                    bg="white"
-                    borderColor="blackAlpha.200"
+                    bg="rgba(255,255,255,0.05)"
+                    borderColor="rgba(255,255,255,0.1)"
+                    color="rgba(240,238,255,0.95)"
                     flex="1"
                     minW="0"
                     placeholder="What needs to be done?"
@@ -23,9 +24,30 @@ export const TodoCreateForm = React.memo<Props>(({newTaskName, onChange, onSubmi
                     size="lg"
                     value={newTaskName}
                     onChange={event => onChange(event.target.value)}
-                    _focusVisible={{borderColor: "#635bff", boxShadow: "0 0 0 1px #635bff", zIndex: 1}}
+                    _placeholder={{color: "rgba(180,178,210,0.38)"}}
+                    _focusVisible={{
+                        borderColor: "rgba(124,111,255,0.6)",
+                        boxShadow: "0 0 0 3px rgba(124,111,255,0.15)",
+                        bg: "rgba(255,255,255,0.07)",
+                        zIndex: 1,
+                    }}
                 />
-                <Button aria-label="Add task" bg="#635bff" boxSize="12" color="white" disabled={!newTaskName.trim()} flexShrink="0" minW="12" p="0" rounded="xl" type="submit" _hover={{bg: "#4f46e5"}}>
+                <Button
+                    aria-label="Add task"
+                    bg="rgba(124,111,255,0.85)"
+                    borderColor="rgba(124,111,255,0.3)"
+                    borderWidth="1px"
+                    boxSize="12"
+                    color="white"
+                    disabled={!newTaskName.trim()}
+                    flexShrink="0"
+                    minW="12"
+                    p="0"
+                    rounded="xl"
+                    type="submit"
+                    _hover={{bg: "rgba(124,111,255,1)", boxShadow: "0 8px 24px rgba(124,111,255,0.35)"}}
+                    _disabled={{opacity: 0.4}}
+                >
                     <LuPlus />
                 </Button>
             </Group>

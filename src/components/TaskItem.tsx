@@ -38,10 +38,11 @@ export const TaskItem = React.memo<Props>(({task}) => {
     return (
         <Flex
             align="center"
-            bg="white"
-            borderColor={task.completed ? "green.200" : "blackAlpha.100"}
+            backdropFilter="blur(8px)"
+            bg={task.completed ? "rgba(0,229,160,0.06)" : "rgba(255,255,255,0.04)"}
+            borderColor={task.completed ? "rgba(0,229,160,0.2)" : "rgba(255,255,255,0.08)"}
             borderWidth="1px"
-            boxShadow="0 8px 24px rgba(50, 50, 93, 0.04)"
+            boxShadow={task.completed ? "0 4px 16px rgba(0,229,160,0.07)" : "0 4px 16px rgba(0,0,0,0.2)"}
             gap="2"
             minH="14"
             overflow="hidden"
@@ -50,8 +51,13 @@ export const TaskItem = React.memo<Props>(({task}) => {
             py="2"
             rounded="2xl"
             transition="all 0.2s ease"
-            _dark={{bg: task.completed ? "green.950" : undefined, borderColor: task.completed ? "green.800" : undefined}}
-            _hover={{borderColor: task.completed ? "green.300" : "#c7d2fe", boxShadow: "0 12px 32px rgba(50, 50, 93, 0.08)", transform: "translateY(-1px)"}}
+            _hover={{
+                borderColor: task.completed ? "rgba(0,229,160,0.35)" : "rgba(124,111,255,0.35)",
+                boxShadow: task.completed
+                    ? "0 8px 24px rgba(0,229,160,0.12)"
+                    : "0 8px 24px rgba(124,111,255,0.12)",
+                transform: "translateY(-1px)",
+            }}
         >
             {isEditing ? (
                 <React.Fragment>
@@ -59,17 +65,42 @@ export const TaskItem = React.memo<Props>(({task}) => {
                         ml={2}
                         autoFocus
                         aria-label="Task name"
+                        bg="rgba(255,255,255,0.07)"
+                        borderColor="rgba(124,111,255,0.4)"
+                        color="rgba(240,238,255,0.95)"
                         flex="1"
                         rounded="xl"
                         size="sm"
                         value={editingName}
                         onChange={event => setEditingName(event.target.value)}
                         onKeyDown={handleEditKeyDown}
+                        _focusVisible={{
+                            borderColor: "rgba(124,111,255,0.7)",
+                            boxShadow: "0 0 0 2px rgba(124,111,255,0.2)",
+                        }}
                     />
-                    <IconButton aria-label="Save task name" bg="#635bff" color="white" rounded="full" size="sm" onClick={saveName} _hover={{bg: "#4f46e5"}}>
+                    <IconButton
+                        aria-label="Save task name"
+                        bg="rgba(124,111,255,0.85)"
+                        borderColor="rgba(124,111,255,0.3)"
+                        borderWidth="1px"
+                        color="white"
+                        rounded="full"
+                        size="sm"
+                        onClick={saveName}
+                        _hover={{bg: "rgba(124,111,255,1)"}}
+                    >
                         <LuCheck />
                     </IconButton>
-                    <IconButton aria-label="Cancel editing" rounded="full" size="sm" variant="ghost" onClick={() => setEditingName(null)}>
+                    <IconButton
+                        aria-label="Cancel editing"
+                        color="rgba(200,198,230,0.6)"
+                        rounded="full"
+                        size="sm"
+                        variant="ghost"
+                        onClick={() => setEditingName(null)}
+                        _hover={{bg: "rgba(255,255,255,0.07)", color: "rgba(240,238,255,0.9)"}}
+                    >
                         <LuX />
                     </IconButton>
                 </React.Fragment>
@@ -77,7 +108,7 @@ export const TaskItem = React.memo<Props>(({task}) => {
                 <React.Fragment>
                     <Checkbox.Root
                         checked={task.completed}
-                        colorPalette="blue"
+                        colorPalette="purple"
                         flex="1"
                         gap="3"
                         minW="0"
@@ -85,11 +116,19 @@ export const TaskItem = React.memo<Props>(({task}) => {
                         onCheckedChange={details => updateTask(task.id, {completed: details.checked === true})}
                     >
                         <Checkbox.HiddenInput />
-                        <Checkbox.Control borderColor="blackAlpha.300" rounded="md">
+                        <Checkbox.Control
+                            borderColor="rgba(255,255,255,0.2)"
+                            bg={task.completed ? "rgba(124,111,255,0.8)" : "rgba(255,255,255,0.04)"}
+                            rounded="md"
+                            _checked={{
+                                bg: "rgba(124,111,255,0.85)",
+                                borderColor: "rgba(124,111,255,0.5)",
+                            }}
+                        >
                             <Checkbox.Indicator />
                         </Checkbox.Control>
                         <Checkbox.Label
-                            color={task.completed ? "gray.500" : "#0a2540"}
+                            color={task.completed ? "rgba(160,200,180,0.65)" : "rgba(230,228,255,0.92)"}
                             fontWeight="semibold"
                             overflow="hidden"
                             textDecoration={task.completed ? "line-through" : undefined}
@@ -102,16 +141,24 @@ export const TaskItem = React.memo<Props>(({task}) => {
                     <Flex gap="1">
                         <IconButton
                             aria-label="Edit task"
-                            color="#425466"
+                            color="rgba(180,178,210,0.5)"
                             rounded="full"
                             size="sm"
                             variant="ghost"
                             onClick={() => setEditingName(task.name)}
-                            _hover={{bg: "blue.50", color: "#635bff"}}
+                            _hover={{bg: "rgba(124,111,255,0.12)", color: "#a78bfa"}}
                         >
                             <LuPencil />
                         </IconButton>
-                        <IconButton aria-label="Delete task" color="red.600" rounded="full" size="sm" variant="ghost" onClick={() => deleteTask(task.id)} _hover={{bg: "red.50"}}>
+                        <IconButton
+                            aria-label="Delete task"
+                            color="rgba(248,113,113,0.55)"
+                            rounded="full"
+                            size="sm"
+                            variant="ghost"
+                            onClick={() => deleteTask(task.id)}
+                            _hover={{bg: "rgba(239,68,68,0.1)", color: "rgba(248,113,113,0.9)"}}
+                        >
                             <LuTrash2 />
                         </IconButton>
                     </Flex>

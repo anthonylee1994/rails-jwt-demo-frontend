@@ -14,47 +14,81 @@ export const AuthForm = React.memo<Props>(({error, isLogin, isSubmitting, passwo
         <form onSubmit={onSubmit}>
             <Stack gap="5">
                 {error && (
-                    <Alert.Root borderColor="red.200" borderWidth="1px" rounded="xl" status="error">
+                    <Alert.Root
+                        bg="rgba(239,68,68,0.1)"
+                        borderColor="rgba(239,68,68,0.25)"
+                        borderWidth="1px"
+                        rounded="xl"
+                        status="error"
+                    >
                         <Alert.Indicator />
-                        <Alert.Title>{error}</Alert.Title>
+                        <Alert.Title color="rgba(252,165,165,0.9)">{error}</Alert.Title>
                     </Alert.Root>
                 )}
                 <Field.Root required>
-                    <Field.Label color="#0a2540" fontWeight="semibold">
+                    <Field.Label color="rgba(210,208,240,0.85)" fontWeight="semibold" fontSize="sm">
                         Username
                         <Field.RequiredIndicator />
                     </Field.Label>
                     <Input
                         autoCapitalize="none"
                         autoComplete="username"
-                        bg="white"
-                        borderColor="gray.200"
+                        bg="rgba(255,255,255,0.05)"
+                        borderColor="rgba(255,255,255,0.1)"
+                        color="rgba(240,238,255,0.95)"
                         name="username"
                         placeholder="Username"
                         rounded="xl"
                         size="lg"
-                        _focusVisible={{borderColor: "#635bff", boxShadow: "0 0 0 1px #635bff", zIndex: 1}}
+                        _placeholder={{color: "rgba(180,178,210,0.4)"}}
+                        _focusVisible={{
+                            borderColor: "rgba(124,111,255,0.7)",
+                            boxShadow: "0 0 0 3px rgba(124,111,255,0.18)",
+                            bg: "rgba(255,255,255,0.07)",
+                            zIndex: 1,
+                        }}
                     />
                 </Field.Root>
                 <Field.Root required>
-                    <Field.Label color="#0a2540" fontWeight="semibold">
+                    <Field.Label color="rgba(210,208,240,0.85)" fontWeight="semibold" fontSize="sm">
                         Password
                         <Field.RequiredIndicator />
                     </Field.Label>
                     <Input
                         autoComplete={isLogin ? "current-password" : "new-password"}
-                        bg="white"
-                        borderColor="gray.200"
+                        bg="rgba(255,255,255,0.05)"
+                        borderColor="rgba(255,255,255,0.1)"
+                        color="rgba(240,238,255,0.95)"
                         name="password"
                         placeholder="Enter your password"
                         ref={passwordInputRef}
                         rounded="xl"
                         size="lg"
                         type="password"
-                        _focusVisible={{borderColor: "#635bff", boxShadow: "0 0 0 1px #635bff", zIndex: 1}}
+                        _placeholder={{color: "rgba(180,178,210,0.4)"}}
+                        _focusVisible={{
+                            borderColor: "rgba(124,111,255,0.7)",
+                            boxShadow: "0 0 0 3px rgba(124,111,255,0.18)",
+                            bg: "rgba(255,255,255,0.07)",
+                            zIndex: 1,
+                        }}
                     />
                 </Field.Root>
-                <Button bg="#635bff" color="white" loading={isSubmitting} mt="2" rounded="xl" size="lg" type="submit" w="full" _hover={{bg: "#4f46e5"}}>
+                <Button
+                    bg="rgba(124,111,255,0.9)"
+                    borderColor="rgba(124,111,255,0.4)"
+                    borderWidth="1px"
+                    boxShadow="0 8px 32px rgba(124,111,255,0.3)"
+                    color="white"
+                    loading={isSubmitting}
+                    mt="2"
+                    rounded="xl"
+                    size="lg"
+                    type="submit"
+                    w="full"
+                    _hover={{bg: "rgba(124,111,255,1)", boxShadow: "0 12px 40px rgba(124,111,255,0.45)"}}
+                    _active={{bg: "rgba(100,90,220,0.9)"}}
+                >
                     {isLogin ? "Login" : "Register"}
                 </Button>
             </Stack>

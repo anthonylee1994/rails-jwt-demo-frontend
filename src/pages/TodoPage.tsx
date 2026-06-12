@@ -35,23 +35,43 @@ export const TodoPage = React.memo(() => {
     };
 
     return (
-        <Box
-            bg="#f6f9fc"
-            minH="100dvh"
-            overflow="hidden"
-            position="relative"
-            _before={{
-                bg: "linear-gradient(135deg, #00d4ff 0%, #635bff 52%, #a960ee 100%)",
-                content: '""',
-                h: "420px",
-                left: "-12%",
-                position: "absolute",
-                right: "-12%",
-                top: "-190px",
-                transform: "skewY(-6deg)",
-            }}
-        >
-            <Container maxW="6xl" px={{base: "4", lg: "8"}} py={{base: "6", md: "8"}} position="relative">
+        <Box bg="#08080f" minH="100dvh" overflow="hidden" position="relative">
+            {/* Ambient orbs */}
+            <Box
+                filter="blur(100px)"
+                h="700px"
+                left="-250px"
+                pointerEvents="none"
+                position="absolute"
+                top="-350px"
+                w="700px"
+                zIndex="0"
+                bg="radial-gradient(circle, rgba(124,111,255,0.28) 0%, transparent 70%)"
+            />
+            <Box
+                filter="blur(80px)"
+                h="500px"
+                pointerEvents="none"
+                position="absolute"
+                right="-150px"
+                top="20%"
+                w="500px"
+                zIndex="0"
+                bg="radial-gradient(circle, rgba(0,212,255,0.14) 0%, transparent 70%)"
+            />
+            <Box
+                bottom="-100px"
+                filter="blur(100px)"
+                h="500px"
+                left="20%"
+                pointerEvents="none"
+                position="absolute"
+                w="500px"
+                zIndex="0"
+                bg="radial-gradient(circle, rgba(168,96,238,0.12) 0%, transparent 70%)"
+            />
+
+            <Container maxW="6xl" px={{base: "4", lg: "8"}} py={{base: "6", md: "8"}} position="relative" zIndex="1">
                 <TodoHeader onLogout={logout} />
                 <TodoStats completedCount={completedCount} completedPercent={completedPercent} totalCount={tasks.length} />
                 <TodoQueueCard
