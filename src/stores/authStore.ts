@@ -1,8 +1,7 @@
-import axios from "axios";
 import {create} from "zustand";
-import {apiClient, extractErrorMessage} from "@/api/apiClient";
-
-const TOKEN_KEY = "token";
+import {apiClient} from "@/api/apiClient";
+import {getToken, setToken, clearToken} from "@/lib/storage";
+import {runAsync} from "@/lib/runAsync";
 
 function decodeUsername(token: string): string | null {
     try {
@@ -22,11 +21,12 @@ interface AuthState {
     error: string | null;
     isSubmitting: boolean;
     authenticate(mode: AuthMode, username: string, password: string): Promise<boolean>;
+    setToken(token: string): void;
     logout(): void;
     clearError(): void;
 }
 
-const storedToken = localStorage.getItem(TOKEN_KEY);
+const storedToken = getToken();
 
 export const useAuthStore = create<AuthState>()(set => ({
     token: storedToken,
@@ -37,36 +37,33 @@ export const useAuthStore = create<AuthState>()(set => ({
         set({isSubmitting: true, error: null});
 
         try {
-            const response = await apiClient.post<{token: string}>(`/auth/${mode}`, {username, password});
-
-            localStorage.setItem(TOKEN_KEY, response.data.token);
-            set({token: response.data.token, username: decodeUsername(response.data.token), isSubmitting: false});
+            await runAsync(
+                set,
+                {
+                    loadingKey: "isSubmitting",
+                    onSuccess: data => ({token: data.token, username: decodeUsername(data.token)}),
+                },
+                async () => {
+                    const response = await apiClient.post<{token: string}>(`/auth/${mode}`, {username, password});
+                    setToken(response.data.token);
+                    return response.data;
+                }
+            );
 
             return true;
-        } catch (error) {
-            set({error: extractErrorMessage(error), isSubmitting: false});
-
+        } catch {
             return false;
         }
     },
+    setToken(token) {
+        setToken(token);
+        set({token, username: decodeUsername(token)});
+    },
     logout() {
-        localStorage.removeItem(TOKEN_KEY);
+        clearToken();
         set({token: null, username: null, error: null});
     },
     clearError() {
         set({error: null});
     },
 }));
-
-apiClient.interceptors.response.use(
-    function (response) {
-        return response;
-    },
-    function (error) {
-        if (axios.isAxiosError(error) && error.response?.status === 401 && localStorage.getItem(TOKEN_KEY)) {
-            useAuthStore.getState().logout();
-        }
-
-        return Promise.reject(error);
-    }
-);

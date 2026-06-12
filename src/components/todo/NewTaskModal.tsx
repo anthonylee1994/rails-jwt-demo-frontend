@@ -1,7 +1,8 @@
 import React from "react";
 import {Modal} from "@/components/lane/Modal";
+import {ModalHeader} from "@/components/lane/ModalHeader";
 import {btnClass, kbd, modalFooter, modalTitleInput, pillAccent} from "@/components/lane/classes";
-import {PlusIcon, XIcon} from "@/components/lane/icons";
+import {PlusIcon} from "@/components/lane/icons";
 import {useTaskStore} from "@/stores/taskStore";
 
 interface Props {
@@ -31,12 +32,7 @@ export const NewTaskModal = React.memo<Props>(({onClose}) => {
 
     return (
         <Modal onClose={onClose}>
-            <div className="flex items-center justify-between px-[18px] pt-4 pb-0">
-                <span className={pillAccent}>New task</span>
-                <button aria-label="Close" className={btnClass("quiet")} onClick={onClose} style={{width: 32, height: 32, padding: 0, borderRadius: 8}}>
-                    <XIcon size={18} />
-                </button>
-            </div>
+            <ModalHeader leading={<span className={pillAccent}>New task</span>} onClose={onClose} />
             <div className="px-[18px] pt-2.5 pb-[18px]">
                 <input autoFocus className={modalTitleInput} onChange={event => setName(event.target.value)} onKeyDown={handleKeyDown} placeholder="What needs doing?" value={name} />
                 <div className="mt-1.5 text-[12.5px] text-ln-ink-4">Added to the top of your list — newest first.</div>

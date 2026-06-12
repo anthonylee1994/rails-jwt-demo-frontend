@@ -1,7 +1,8 @@
 import React from "react";
 import {Modal} from "@/components/lane/Modal";
-import {btnClass, checkClass, modalFooter, modalTitleInput, mono} from "@/components/lane/classes";
-import {CheckSmIcon, TrashIcon, XIcon} from "@/components/lane/icons";
+import {ModalHeader} from "@/components/lane/ModalHeader";
+import {btnClass, checkClass, labelTiny, modalFooter, modalTitleInput, mono} from "@/components/lane/classes";
+import {CheckSmIcon, TrashIcon} from "@/components/lane/icons";
 import {useTaskStore} from "@/stores/taskStore";
 import type {Task} from "@/types/Task";
 
@@ -63,26 +64,26 @@ export const EditTaskModal = React.memo<Props>(({task, onClose}) => {
 
     return (
         <Modal onClose={onClose}>
-            <div className="flex items-center justify-between px-[18px] pt-4 pb-0">
-                <button className="flex items-center gap-[9px] border-none bg-transparent p-0" onClick={() => setCompleted(!completed)}>
-                    <span className={checkClass(completed)}>
-                        <CheckSmIcon size={13} strokeWidth={2.4} />
-                    </span>
-                    <span className="text-[13px] font-semibold text-ln-ink-2">{completed ? "Completed" : "Mark complete"}</span>
-                </button>
-                <button aria-label="Close" className={btnClass("quiet")} onClick={onClose} style={{width: 32, height: 32, padding: 0, borderRadius: 8}}>
-                    <XIcon size={18} />
-                </button>
-            </div>
+            <ModalHeader
+                leading={
+                    <button className="flex items-center gap-[9px] border-none bg-transparent p-0" onClick={() => setCompleted(!completed)}>
+                        <span className={checkClass(completed)}>
+                            <CheckSmIcon size={13} strokeWidth={2.4} />
+                        </span>
+                        <span className="text-[13px] font-semibold text-ln-ink-2">{completed ? "Completed" : "Mark complete"}</span>
+                    </button>
+                }
+                onClose={onClose}
+            />
             <div className="px-[18px] pt-3 pb-4">
                 <input autoFocus className={modalTitleInput} onChange={event => setName(event.target.value)} onKeyDown={handleKeyDown} placeholder="Task name" value={name} />
                 <div className="mt-4 flex gap-[22px] border-t border-ln-line pt-3.5">
                     <div>
-                        <div className="text-[11px] font-semibold tracking-wider text-ln-ink-4 uppercase">Created</div>
+                        <div className={labelTiny}>Created</div>
                         <div className={mono + " mt-[3px] text-[12.5px] text-ln-ink-2"}>{formatDateTime(task.created_at)}</div>
                     </div>
                     <div>
-                        <div className="text-[11px] font-semibold tracking-wider text-ln-ink-4 uppercase">Updated</div>
+                        <div className={labelTiny}>Updated</div>
                         <div className={mono + " mt-[3px] text-[12.5px] text-ln-ink-2"}>{formatDateTime(task.updated_at)}</div>
                     </div>
                 </div>

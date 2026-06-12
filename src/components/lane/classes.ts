@@ -41,6 +41,7 @@ export function btnClass(variant: BtnVariant, opts?: {block?: boolean; sm?: bool
 /* inputs */
 export const field = "flex flex-col gap-[7px]";
 export const label = "text-[13px] font-semibold text-ln-ink-2 tracking-[-0.01em]";
+export const labelTiny = "text-[11px] font-semibold tracking-wider text-ln-ink-4 uppercase";
 export const input =
     "h-11 w-full rounded-ln-sm border border-ln-border-2 bg-ln-surface px-3.5 text-[15px] text-ln-ink tracking-[-0.01em] [transition:border-color_0.14s,box-shadow_0.14s] placeholder:text-ln-ink-4 focus:border-ln-accent focus:shadow-[0_0_0_3.5px_rgba(91,91,214,0.3)] focus:outline-none";
 export const hint = "text-[12.5px] text-ln-ink-3 tracking-[-0.005em]";

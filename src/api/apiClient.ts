@@ -1,12 +1,13 @@
 import {useAuthStore} from "@/stores/authStore";
 import axios from "axios";
+import {getToken, setToken as persistToken} from "@/lib/storage";
 
 export const apiClient = axios.create({
     baseURL: import.meta.env.VITE_API_URL,
 });
 
 apiClient.interceptors.request.use(function (config) {
-    const token = localStorage.getItem("token");
+    const token = getToken();
 
     if (token) {
         config.headers.authorization = `Bearer ${token}`;
@@ -19,7 +20,8 @@ apiClient.interceptors.response.use(
     response => {
         const latestToken = extractBearerToken(response.headers.authorization);
         if (latestToken) {
-            localStorage.setItem("token", latestToken);
+            persistToken(latestToken);
+            useAuthStore.getState().setToken(latestToken);
         }
 
         return response;

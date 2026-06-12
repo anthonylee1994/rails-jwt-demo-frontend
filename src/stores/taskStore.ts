@@ -1,5 +1,6 @@
 import {create} from "zustand";
-import {apiClient, extractErrorMessage} from "@/api/apiClient";
+import {apiClient} from "@/api/apiClient";
+import {runAsync} from "@/lib/runAsync";
 import type {Task} from "@/types/Task";
 
 interface TaskState {
@@ -17,41 +18,42 @@ export const useTaskStore = create<TaskState>()((set, get) => ({
     isLoading: false,
     error: null,
     async fetchTasks() {
-        set({isLoading: true, error: null});
-
-        try {
-            const response = await apiClient.get<Task[]>("/tasks");
-
-            set({tasks: response.data, isLoading: false});
-        } catch (error) {
-            set({error: extractErrorMessage(error), isLoading: false});
-        }
+        await runAsync(
+            set,
+            {
+                loadingKey: "isLoading",
+                onSuccess: tasks => ({tasks}),
+            },
+            async () => (await apiClient.get<Task[]>("/tasks")).data
+        );
     },
     async createTask(name) {
-        try {
-            const response = await apiClient.post<Task>("/tasks", {name});
-
-            set({tasks: [response.data, ...get().tasks], error: null});
-        } catch (error) {
-            set({error: extractErrorMessage(error)});
-        }
+        await runAsync(
+            set,
+            {
+                onSuccess: task => ({tasks: [task, ...get().tasks]}),
+            },
+            async () => (await apiClient.post<Task>("/tasks", {name})).data
+        );
     },
     async updateTask(id, changes) {
-        try {
-            const response = await apiClient.put<Task>(`/tasks/${id}`, changes);
-
-            set({tasks: get().tasks.map(task => (task.id === id ? response.data : task)), error: null});
-        } catch (error) {
-            set({error: extractErrorMessage(error)});
-        }
+        await runAsync(
+            set,
+            {
+                onSuccess: task => ({tasks: get().tasks.map(t => (t.id === id ? task : t))}),
+            },
+            async () => (await apiClient.put<Task>(`/tasks/${id}`, changes)).data
+        );
     },
     async deleteTask(id) {
-        try {
-            await apiClient.delete(`/tasks/${id}`);
-
-            set({tasks: get().tasks.filter(task => task.id !== id), error: null});
-        } catch (error) {
-            set({error: extractErrorMessage(error)});
-        }
+        await runAsync(
+            set,
+            {
+                onSuccess: () => ({tasks: get().tasks.filter(t => t.id !== id)}),
+            },
+            async () => {
+                await apiClient.delete(`/tasks/${id}`);
+            }
+        );
     },
 }));
