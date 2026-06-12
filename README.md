@@ -11,8 +11,7 @@ Live demo: https://lane.on99.app/
 - **Zustand** - auth and task state
 - **Axios** - API client with JWT request/response handling
 - **React Router** - single-page routing and fallback redirects
-- **React Icons** - UI icons
-- **Tailwind CSS v4** - responsive Lane-style auth and task UI
+- **Tailwind CSS v4** - responsive Lane-style auth and task UI (custom SVG icon set, no `react-icons` dependency)
 
 ## Features
 
@@ -75,9 +74,11 @@ src/
 │   │   └── BrandPanel.tsx       # Auth page brand panel
 │   ├── lane/
 │   │   ├── Modal.tsx            # Shared modal shell
+│   │   ├── ModalHeader.tsx      # Shared modal header (leading slot + close button)
+│   │   ├── IconBubble.tsx       # Shared rounded soft-color icon bubble
 │   │   ├── atoms.tsx            # Shared UI primitives
 │   │   ├── classes.ts           # Shared Tailwind class strings (buttons, inputs, nav…)
-│   │   └── icons.tsx            # Inline UI icons
+│   │   └── icons.tsx            # Inline SVG icon set (CheckIcon, XIcon, etc.)
 │   └── todo/
 │       ├── EditTaskModal.tsx    # Rename, complete, and delete task modal
 │       ├── EmptyState.tsx       # Empty task list prompt
@@ -92,9 +93,14 @@ src/
 │   └── TodoPage.tsx             # Todo screen
 ├── styles/
 │   └── tailwind.css             # Tailwind entry + Lane design tokens (@theme)
+├── hooks/
+│   └── useTrimmedSubmit.ts      # Shared hook for trimmed-text modal submit + Enter handling
+├── lib/
+│   ├── runAsync.ts              # Shared try/catch helper for async store actions
+│   └── storage.ts               # Token persistence helpers (getToken / setToken / clearToken)
 ├── stores/
 │   ├── authStore.ts             # Auth state and JWT login/logout logic
-│   └── taskStore.ts             # Task CRUD state
+│   └── taskStore.ts             # Task CRUD state (clearError + Promise<boolean> mutations)
 ├── types/
 │   ├── Task.ts                  # Task interface
 │   └── TaskFilter.ts            # Todo filter type
