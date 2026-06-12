@@ -6,7 +6,6 @@ React + TypeScript frontend for a JWT-authenticated todo app. It pairs with the 
 
 - **React 19** + **TypeScript** - UI
 - **Vite** - dev server and production build
-- **Chakra UI v3** - component library
 - **Zustand** - auth and task state
 - **Axios** - API client with JWT request/response handling
 - **React Icons** - UI icons
@@ -20,7 +19,7 @@ React + TypeScript frontend for a JWT-authenticated todo app. It pairs with the 
 - Auto-logout when an authenticated request receives `401 Unauthorized`
 - Per-user todo list scoped by JWT identity
 - Create, rename, complete/uncomplete, and delete tasks
-- Responsive Chakra UI auth and todo screens
+- Responsive auth and todo screens
 
 ## Getting Started
 
@@ -91,10 +90,10 @@ src/
 
 ## Scripts
 
-| Command | Description |
-|---|---|
-| `pnpm dev` | Start dev server |
-| `pnpm build` | Type-check + build for production |
-| `pnpm lint` | Run ESLint |
-| `pnpm preview` | Preview production build |
-| `pnpm format` | Format with Prettier |
+| Command        | Description                       |
+| -------------- | --------------------------------- |
+| `pnpm dev`     | Start dev server                  |
+| `pnpm build`   | Type-check + build for production |
+| `pnpm lint`    | Run ESLint                        |
+| `pnpm preview` | Preview production build          |
+| `pnpm format`  | Format with Prettier              |

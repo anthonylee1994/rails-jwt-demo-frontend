@@ -65,7 +65,7 @@ export const Sidebar = React.memo<Props>(({counts, filter, username, onFilterCha
                             <div style={{minWidth: 0}}>
                                 <div style={{fontSize: 14, fontWeight: 700, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap"}}>{displayName}</div>
                                 <div className="mono" style={{fontSize: 11, color: "var(--ln-ink-4)", whiteSpace: "nowrap"}}>
-                                    signed in
+                                    Signed In
                                 </div>
                             </div>
                         </div>
