@@ -70,20 +70,6 @@ export const TodoPage = React.memo(() => {
 
         return (
             <React.Fragment>
-                {error && (
-                    <div className={errorBanner + " mx-3.5 mt-1 mb-2.5"}>
-                        <AlertIcon size={16} />
-                        <span>{error}</span>
-                        <button
-                            aria-label="Dismiss error"
-                            className="ml-auto -mr-1 flex h-6 w-6 flex-none items-center justify-center rounded-md border-none bg-transparent p-0 text-[#a33833] hover:bg-[#f3d3d1]/60"
-                            onClick={() => clearError()}
-                            type="button"
-                        >
-                            <XIcon size={14} strokeWidth={2.2} />
-                        </button>
-                    </div>
-                )}
                 {filter !== "completed" && activeTasks.map(task => <TaskRow key={task.id} task={task} onOpen={() => openEdit(task)} />)}
                 {filter === "active" && activeTasks.length === 0 && <div className="px-4 py-9 text-center text-[13.5px] text-ln-ink-4">All clear — nothing active.</div>}
                 {filter === "all" && completedTasks.length > 0 && (
@@ -153,7 +139,23 @@ export const TodoPage = React.memo(() => {
                     </div>
                 </div>
 
-                <div className="flex-1 overflow-y-auto px-5 pt-3 pb-[90px] max-[820px]:px-3 max-[820px]:pt-1 max-[820px]:pb-[calc(110px+env(safe-area-inset-bottom,0))]">{renderList()}</div>
+                <div className="flex-1 overflow-y-auto px-5 pt-3 pb-[90px] max-[820px]:px-3 max-[820px]:pt-1 max-[820px]:pb-[calc(110px+env(safe-area-inset-bottom,0))]">
+                    {error && !isLoadFailed && (
+                        <div className={errorBanner + " mx-3.5 mt-1 mb-2.5"}>
+                            <AlertIcon size={16} />
+                            <span>{error}</span>
+                            <button
+                                aria-label="Dismiss error"
+                                className="ml-auto -mr-1 flex h-6 w-6 flex-none items-center justify-center rounded-md border-none bg-transparent p-0 text-[#a33833] hover:bg-[#f3d3d1]/60"
+                                onClick={() => clearError()}
+                                type="button"
+                            >
+                                <XIcon size={14} strokeWidth={2.2} />
+                            </button>
+                        </div>
+                    )}
+                    {renderList()}
+                </div>
             </div>
 
             <button aria-label="New task" className={FAB_CLASS} onClick={() => setModal({kind: "new"})}>
