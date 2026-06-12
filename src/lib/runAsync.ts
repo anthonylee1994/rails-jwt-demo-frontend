@@ -11,6 +11,7 @@ export async function runAsync<T>(set: (partial: Record<string, unknown>) => voi
     const errorKey = opts.errorKey ?? "error";
 
     try {
+        set({[loadingKey]: true, [errorKey]: null});
         const data = await fn();
         set({[loadingKey]: false, [errorKey]: null, ...(opts.onSuccess?.(data) ?? {})});
         return data;
