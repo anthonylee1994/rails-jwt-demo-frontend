@@ -747,7 +747,7 @@ button.ln-check.is-done:hover {
     display: none;
     position: fixed;
     right: 18px;
-    bottom: 24px;
+    bottom: calc(24px + env(safe-area-inset-bottom, 0px));
     width: 54px;
     height: 54px;
     border-radius: 18px;
@@ -769,6 +769,6 @@ button.ln-check.is-done:hover {
         display: inline-flex;
     }
     .ln-list {
-        padding: 4px 12px 110px;
+        padding: 4px 12px calc(110px + env(safe-area-inset-bottom, 0px));
     }
 }
