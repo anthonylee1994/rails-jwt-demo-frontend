@@ -1,0 +1,19 @@
+{
+    "name": "Lane",
+    "short_name": "Lane",
+    "description": "A private, focused task list.",
+    "start_url": "/",
+    "scope": "/",
+    "display": "standalone",
+    "orientation": "portrait-primary",
+    "background_color": "#f7f7fb",
+    "theme_color": "#5b5bd6",
+    "icons": [
+        {
+            "src": "/favicon.svg",
+            "sizes": "any",
+            "type": "image/svg+xml",
+            "purpose": "any maskable"
+        }
+    ]
+}
